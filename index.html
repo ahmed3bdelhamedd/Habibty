@@ -434,7 +434,7 @@
         <h2>الموقع ده مخصص لشخص واحد بس</h2>
         <p>اكتبي كلمة السر الخاصة بنا.. وافتحي قلبي</p>
         <div class="input-wrap">
-            <input type="password" id="passwordInput" placeholder="● ● ● ● ● ● ● ●" autocomplete="off">
+            <input type="text" id="passwordInput" placeholder="● ● ● ● ● ● ● ●" autocomplete="off" autocorrect="off" autocapitalize="off">
         </div>
         <button class="unlock-btn" onclick="checkLovePassword()">افتح قلبي ❤️</button>
         <p id="errorMessage">الباسورد غلط.. ركزي وافتكري الكلمة السرية 😉</p>
@@ -508,9 +508,11 @@
         lockPetals.appendChild(p);
     }
 
-    // ===== PASSWORD CHECK =====
+    // ===== PASSWORD CHECK (المعالجة المباشرة المضمونة) =====
     function checkLovePassword() {
-        var inputVal = document.getElementById('passwordInput').value.trim().toLowerCase();
+        var inputElement = document.getElementById('passwordInput');
+        // تنظيف شامل للمسافات وحالة الأحرف
+        var inputVal = inputElement.value.trim().toLowerCase();
         var errorMsg = document.getElementById('errorMessage');
         var lockScreen = document.getElementById('lockScreen');
         var mainContent = document.getElementById('mainContent');
@@ -518,15 +520,16 @@
         if (inputVal === "ahmedxxsafia") {
             lockScreen.style.display = 'none';
             mainContent.style.display = 'block';
+            
             startHeartsRain();
             initGallery();
             startCountdown();
-            // Show music control bar and play music
+            
             document.getElementById('music-control-bar').style.display = 'flex';
             setTimeout(startMusic, 400);
         } else {
             errorMsg.style.display = 'block';
-            document.getElementById('passwordInput').value = '';
+            inputElement.value = '';
         }
     }
 
@@ -571,7 +574,7 @@
         }, 400);
     }
 
-    // ===== GALLERY WITH ROBUST FALLBACK HANDLING =====
+    // ===== GALLERY =====
     const loveMessages = [
         "مقدرش على زعلك.. ضحكتك بالدنيا كلها 💖",
         "كل لحظة هنا بتفكرني بقد إيه أنا محظوظ بكي ✨",
@@ -581,5 +584,4 @@
         "مكانك في قلبي ثابت ومبيغيروش أي موقف",
         "سامحيني.. مفيش حد بيحبك قدي في الدنيا دي كلها",
         "انتي النجمة اللي بتنور عتمة أيامي ⭐",
-        "كل صورة من دول وراها حكاية حلوة عشتها معاكي",
-        "الدنيا بت
+        "كل صورة من دول ورا
