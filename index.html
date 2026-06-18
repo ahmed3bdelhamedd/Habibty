@@ -1,61 +1,74 @@
-// متغيرات المشغل
-let player;
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>إلى أغلى ما في حياتي.. أنا آسف ❤️</title>
+    <style>
+        /* (نفس الستايلات التي أرسلتها في رسالتك الأولى) */
+        body { background: #fffaf4; font-family: 'Tajawal', sans-serif; color: #3b0a18; overflow-x: hidden; }
+        #lockScreen { position: fixed; inset: 0; z-index: 10000; display: flex; justify-content: center; align-items: center; background: radial-gradient(ellipse at 60% 40%, #ffd6e0 0%, #ffb3c6 40%, #e63262 100%); }
+        .lock-box { background: rgba(255,255,255,0.92); padding: 50px 40px; border-radius: 30px; text-align: center; max-width: 420px; width: 92%; }
+        .unlock-btn { background: linear-gradient(135deg, #e63262, #b5173a); color: white; border: none; padding: 14px 35px; border-radius: 50px; cursor: pointer; margin-top: 20px; }
+        #errorMessage { color: #b5173a; margin-top: 14px; display: none; }
+        #music-control-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 2000; background: rgba(181, 23, 58, 0.95); padding: 12px 25px; border-radius: 50px; display: none; align-items: center; gap: 15px; color: white; }
+    </style>
+    <script src="https://www.youtube.com/iframe_api"></script>
+</head>
+<body>
 
-// تحميل كود YouTube API
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player('youtube-player', {
-        height: '0',
-        width: '0',
-        videoId: 'hcf-wL5f-sw', // معرف الفيديو الخاص بأغنيتنا
-        playerVars: {
-            'autoplay': 0,
-            'controls': 0
+<div id="lockScreen">
+    <div class="lock-box">
+        <h2>اكتبي كلمة السر لفتح قلبي</h2>
+        <input type="text" id="passwordInput" placeholder="اكتبي الباسورد هنا...">
+        <button class="unlock-btn" id="submitBtn">افتح قلبي ❤️</button>
+        <p id="errorMessage">الباسورد غلط.. ركزي وافتكري الكلمة السرية 😉</p>
+    </div>
+</div>
+
+<main id="mainContent" style="display:none;">
+    <section class="hero" style="min-height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+        <h1>مقدرش على زعلك يا أجمل حاجة في دنيتي ❤️</h1>
+        <p>بحبك من غير حدود.. أنا آسف يا قلبي.</p>
+    </section>
+
+    <div id="music-control-bar">
+        <div id="youtube-player"></div>
+        <button class="play-music-btn" id="musicBtn">▶️</button>
+        <span class="music-text">أغنيتنا المفضلة 🎵</span>
+    </div>
+</main>
+
+<script>
+    let player;
+
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('youtube-player', {
+            height: '0',
+            width: '0',
+            videoId: 'hcf-wL5f-sw',
+            playerVars: { 'autoplay': 0, 'controls': 0 }
+        });
+    }
+
+    document.getElementById('musicBtn').addEventListener('click', function() {
+        if (player && player.playVideo) {
+            player.seekTo(33);
+            player.playVideo();
+            this.innerText = '⏸️';
         }
     });
-}
 
-// دالة تشغيل الموسيقى
-document.getElementById('musicBtn').addEventListener('click', function() {
-    if (player && player.playVideo) {
-        player.seekTo(33); // الانتقال للثانية 33
-        player.playVideo();
-        this.innerText = '⏸️'; // تغيير أيقونة الزر
-    }
-});
+    document.getElementById('submitBtn').addEventListener('click', function() {
+        const password = document.getElementById('passwordInput').value.trim();
+        if (password === "ahmedxxsafia") {
+            document.getElementById('lockScreen').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            document.getElementById('music-control-bar').style.display = 'flex';
+        } else {
+            document.getElementById('errorMessage').style.display = 'block';
+        }
+    });
+</script>
 
-// منطق فتح القفل
-document.getElementById('submitBtn').addEventListener('click', function() {
-    const password = document.getElementById('passwordInput').value.trim();
-    const correctPassword = "ahmedxxsafia"; // كلمة السر التي حددتها
-
-    if (password === correctPassword) {
-        document.getElementById('lockScreen').style.display = 'none';
-        document.getElementById('mainContent').style.display = 'block';
-        document.getElementById('music-control-bar').style.display = 'flex';
-        // بدء عداد الوقت عند فتح الصفحة
-        startTimer();
-    } else {
-        document.getElementById('errorMessage').style.display = 'block';
-        document.getElementById('passwordInput').value = ''; // مسح خانة الإدخال عند الخطأ
-    }
-});
-
-// دالة عداد الوقت
-function startTimer() {
-    const targetDate = new Date("2025-08-10T00:00:00").getTime();
-    
-    setInterval(() => {
-        const now = new Date().getTime();
-        const diff = now - targetDate;
-
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        document.getElementById("timer-days").innerText = days;
-        document.getElementById("timer-hours").innerText = hours;
-        document.getElementById("timer-minutes").innerText = minutes;
-        document.getElementById("timer-seconds").innerText = seconds;
-    }, 1000);
-}
+</body>
+</html>
