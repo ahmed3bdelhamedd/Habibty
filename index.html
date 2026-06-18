@@ -98,7 +98,7 @@
             display: none;
         }
 
-        /* باقي ستايل الموقع */
+        /* القلوب المتساقطة */
         .heart {
             position: fixed;
             top: -10vh;
@@ -138,21 +138,26 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 25px;
+            gap: 30px;
             padding: 40px 20px;
             max-width: 1300px;
             margin: 0 auto;
         }
 
+        /* التصميم الإبداعي الجديد للمربعات */
         .photo-card {
-            background: white;
-            padding: 15px;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            background: #fff;
+            padding: 15px 15px 25px 15px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(201, 24, 74, 0.15);
             transform: scale(0.9);
             opacity: 0;
             transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            width: 320px;
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
         }
 
         .photo-card.visible {
@@ -161,5 +166,200 @@
         }
 
         .photo-card:hover {
-            transform: translateY(-15px) rotate(2deg) scale(1.03);
-            box-shadow: 0 20px 35px rgba(201,
+            transform: translateY(-10px) rotate(2deg) scale(1.03);
+            box-shadow: 0 20px 40px rgba(201, 24, 74, 0.3);
+            background: #fff0f3;
+        }
+
+        .photo-card img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #ffb3c6;
+        }
+
+        /* القلب النابض جوه المربع */
+        .card-heart {
+            font-size: 28px;
+            color: #c9184a;
+            margin: 15px 0 5px 0;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .photo-desc {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #7a2232;
+            line-height: 1.5;
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        footer {
+            padding: 60px 20px;
+            font-size: 1.3rem;
+            color: #c9184a;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شاشة القفل التفاعلية -->
+    <div id="lockScreen">
+        <div class="lock-box">
+            <h2>الموقع ده مخصص لشخص واحد بس 🔐</h2>
+            <p>علشان تشوفي المحتوى.. اكتبي الباسورد السري بتاعنا هنا:</p>
+            <input type="password" id="passwordInput" placeholder="اكتبي كلمة السر هنا...">
+            <button onclick="checkPassword()">افتح قلبي ❤️</button>
+            <p id="errorMessage">تؤتؤ.. مش انتي حبيبتي! جربي تاني كده؟ 🤔</p>
+        </div>
+    </div>
+
+    <!-- حاوية مخفية لتشغيل الأغنية من اليوتيوب -->
+    <div id="musicContainer" style="display: none;"></div>
+
+    <header>
+        <h1>مقدرش على زعلك يا أجمل حاجة في دنيتي ❤️</h1>
+        <p class="love-text">
+            الدنيا بتبقى وحشة أوي والوقت مبيعديش وانتي زعلانة مني.. جمعتلك كل صورنا وذكرياتنا هنا عشان أقولك إنك أغلى حاجة في عمري، ومفيش أي حاجة تستاهل إننا نزعل من بعض.. سامحيني يا قلبي المستحيل يلاقي زيك. ✨
+        </p>
+    </header>
+
+    <section class="gallery" id="loveGallery"></section>
+
+    <footer>
+        <p>مستني ضحكتك تنور دنيتي تاني.. بحبك 🔐💖</p>
+    </footer>
+
+    <script>
+        // 1. نظام التحقق من الباسورد وتشغيل الأغنية
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const errorMsg = document.getElementById('errorMessage');
+            const lockScreen = document.getElementById('lockScreen');
+
+            const correctPassword = "ahmedxxsafia"; 
+
+            if (input === correctPassword) {
+                // إخفاء الشاشة
+                lockScreen.style.opacity = '0';
+                lockScreen.style.transform = 'scale(0.8)';
+                
+                setTimeout(() => {
+                    lockScreen.style.display = 'none';
+                    setInterval(createHeart, 300);
+
+                    // 🎵 تشغيل أغنية اليوتيوب 🎵
+                    const youtubeVideoID = "hcf-wL5f-sw"; 
+                    
+                    const musicDiv = document.getElementById('musicContainer');
+                    // تم إضافة start=33 علشان تبدأ من الثانية 33
+                    musicDiv.innerHTML = `<iframe width="10" height="10" src="https://www.youtube.com/embed/${youtubeVideoID}?autoplay=1&start=33&loop=1&playlist=${youtubeVideoID}" frameborder="0" allow="autoplay"></iframe>`;
+                    
+                }, 800);
+            } else {
+                errorMsg.style.display = 'block';
+                document.querySelector('.lock-box').style.animation = 'shake 0.3s ease-in-out';
+                setTimeout(() => {
+                    document.querySelector('.lock-box').style.animation = '';
+                }, 300);
+            }
+        }
+
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // 2. أنيميشن تساقط القلوب
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.opacity = Math.random();
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+            
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+
+        // 3. عبارات صلح وحب مخصصة
+        const loveMessages = [
+            "مقدرش على زعلك، ضحكتك بالدنيا كلها 💖",
+            "كل لحظة في الصور دي بتفكرني بقد إيه أنا محظوظ بيكي ✨",
+            "انتي الأمان اللي مش عاوز أخسره أبداً 🥰",
+            "زعلك على عيني، ومستحيل أهون عليا تسيبيني زعلان",
+            "يا رب يديمك في حياتي وينهي أي زعل بيننا 🔐",
+            "مكانك في قلبي ثابت ومبيغيروش أي موقف",
+            "سامحيني، مفيش حد بيحبك قدي في الدنيا دي كلها",
+            "انتي النجمة اللي بتنور عتمة أيامي، بلاش تطفيها بزعلك ⭐",
+            "كل صورة من دول وراها حكاية حلوة عشتها معاكي",
+            "الدنيا بتظلم في عيني لما بشوفك زعلانة",
+            "جمبك بحس إني ملكت الدنيا، وبزعلك بحس إني خسرت كل حاجة 🌍",
+            "انتي مش بس حبيبتي، انتي كل طاقاتي الحلوة في الحياة",
+            "حقك عليا، والمرة دي وكل مرة أنا اللي هجيلك وأصالحك 💕"
+        ];
+
+        // 4. توليد الـ 29 صورة بشكل عشوائي مع التصميم الجديد
+        const galleryContainer = document.getElementById('loveGallery');
+        const totalPhotos = 29;
+
+        let photoNumbers = [];
+        for (let i = 1; i <= totalPhotos; i++) {
+            photoNumbers.push("0" + i);
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        shuffleArray(photoNumbers);
+
+        photoNumbers.forEach((photoNumber) => {
+            const randomMessage = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+
+            const card = document.createElement('div');
+            card.classList.add('photo-card');
+
+            card.innerHTML = `
+                <img src="${photoNumber}.jpeg" alt="ذكرى رقم ${photoNumber}">
+                <div class="card-heart">❤️</div>
+                <div class="photo-desc">${randomMessage}</div>
+            `;
+
+            galleryContainer.appendChild(card);
+        });
+
+        // 5. أنيميشن ظهور الصور بسلاسة عند السكرول لأسفل
+        const cards = document.querySelectorAll('.photo-card');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => observer.observe(card));
+    </script>
+</body>
+</html>
