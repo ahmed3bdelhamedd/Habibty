@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إلى أغلى ما في حياتي.. أنا آسف ❤️</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(135deg, #ffe5ec, #ffb3c6); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow-x: hidden; color: #4a0e17; text-align: center; }
+
+        /* شاشة القفل */
+        #lockScreen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(135deg, #ffb3c6, #ffe5ec); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: all 0.8s ease-in-out; }
+        .lock-box { background: white; padding: 40px 30px; border-radius: 25px; box-shadow: 0 15px 35px rgba(201, 24, 74, 0.2); text-align: center; max-width: 400px; width: 90%; }
+        .lock-box input { width: 100%; padding: 12px; border: 2px solid #ffb3c6; border-radius: 50px; font-size: 1.2rem; text-align: center; margin-bottom: 15px; }
+        .lock-box button { background: #c9184a; color: white; border: none; padding: 12px 35px; border-radius: 50px; cursor: pointer; font-weight: bold; }
+        
+        /* زر تشغيل الأغنية */
+        #musicBtn { display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 999; background: #c9184a; color: white; padding: 15px 25px; border-radius: 50px; border: none; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); animation: pulse 2s infinite; }
+        
+        @keyframes pulse { 0% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.05); } 100% { transform: translateX(-50%) scale(1); } }
+
+        .gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 40px 20px; }
+        .photo-card { background: #fff; padding: 15px; border-radius: 15px; width: 300px; box-shadow: 0 10px 25px rgba(201, 24, 74, 0.15); }
+        .photo-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; }
+        .card-heart { font-size: 28px; color: #c9184a; margin: 10px 0; }
+    </style>
+</head>
+<body>
+
+    <div id="lockScreen">
+        <div class="lock-box">
+            <h2>الموقع ده مخصص لشخص واحد بس 🔐</h2>
+            <input type="password" id="passwordInput" placeholder="اكتبي كلمة السر هنا...">
+            <button onclick="checkPassword()">افتح قلبي ❤️</button>
+            <p id="errorMessage" style="display:none; color:red; margin-top:10px;">باسورد غلط يا قلبي!</p>
+        </div>
+    </div>
+
+    <!-- زر تشغيل الأغنية هيظهر بعد فتح القفل -->
+    <button id="musicBtn" onclick="playMusic()">شغلي الأغنية يا قلبي ❤️</button>
+    <div id="musicContainer" style="display: none;"></div>
+
+    <header style="padding: 50px 20px;">
+        <h1>مقدرش على زعلك ❤️</h1>
+    </header>
+
+    <section class="gallery" id="loveGallery"></section>
+
+    <script>
+        function checkPassword() {
+            if (document.getElementById('passwordInput').value === "ahmedxxsafia") {
+                document.getElementById('lockScreen').style.display = 'none';
+                document.getElementById('musicBtn').style.display = 'block'; // إظهار الزر
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        }
+
+        function playMusic() {
+            const youtubeVideoID = "hcf-wL5f-sw";
+            const musicDiv = document.getElementById('musicContainer');
+            musicDiv.innerHTML = `<iframe width="0" height="0" src="https://www.youtube.com/embed/${youtubeVideoID}?autoplay=1&start=33&loop=1&playlist=${youtubeVideoID}" frameborder="0" allow="autoplay"></iframe>`;
+            document.getElementById('musicBtn').style.display = 'none'; // إخفاء الزر بعد الضغط
+        }
+
+        // إنشاء الصور عشوائياً
+        const galleryContainer = document.getElementById('loveGallery');
+        let photoNumbers = [];
+        for (let i = 1; i <= 29; i++) photoNumbers.push("0" + i);
+        photoNumbers.sort(() => Math.random() - 0.5);
+
+        photoNumbers.forEach(num => {
+            const card = document.createElement('div');
+            card.className = 'photo-card';
+            card.innerHTML = `<img src="${num}.jpeg"><div class="card-heart">❤️</div>`;
+            galleryContainer.appendChild(card);
+        });
+    </script>
+</body>
+</html>
