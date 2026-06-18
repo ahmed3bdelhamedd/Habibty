@@ -28,6 +28,115 @@
             overflow-x: hidden;
         }
 
+        /* ===== LOCK SCREEN ===== */
+        #lockScreen {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(ellipse at 60% 40%, #ffd6e0 0%, #ffb3c6 40%, #e63262 100%);
+        }
+
+        .lock-petals {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .petal {
+            position: absolute;
+            font-size: 1.4rem;
+            animation: petalFall linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes petalFall {
+            0%  { transform: translateY(-5vh) rotate(0deg); opacity: 0.6; }
+            100%{ transform: translateY(110vh) rotate(400deg); opacity: 0; }
+        }
+
+        .lock-box {
+            position: relative;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(10px);
+            padding: 50px 40px;
+            border-radius: 30px;
+            box-shadow: 0 25px 60px rgba(182, 23, 58, 0.25), 0 0 0 1px rgba(255,255,255,0.6) inset;
+            text-align: center;
+            max-width: 420px;
+            width: 92%;
+        }
+
+        .lock-icon {
+            font-size: 3.5rem;
+            margin-bottom: 18px;
+            display: block;
+        }
+
+        .lock-box h2 {
+            font-family: 'Amiri', serif;
+            font-size: 1.7rem;
+            color: var(--rose-deep);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .lock-box p {
+            color: var(--mid-text);
+            font-size: 1.05rem;
+            margin-bottom: 28px;
+            line-height: 1.7;
+        }
+
+        .input-wrap {
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .lock-box input {
+            width: 100%;
+            padding: 14px 22px;
+            border: 2px solid var(--rose-pale);
+            border-radius: 50px;
+            font-size: 1.15rem;
+            font-family: 'Tajawal', sans-serif;
+            text-align: center;
+            outline: none;
+            background: var(--rose-blush);
+            color: var(--dark-text);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .lock-box input:focus {
+            border-color: var(--rose-mid);
+            box-shadow: 0 0 0 4px rgba(230,50,98,0.12);
+        }
+
+        .unlock-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--rose-mid), var(--rose-deep));
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            font-size: 1.15rem;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(182,23,58,0.3);
+        }
+
+        #errorMessage {
+            color: var(--rose-deep);
+            margin-top: 14px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            display: none;
+        }
+
         /* ===== HEARTS RAIN ===== */
         .heart {
             position: fixed;
@@ -99,7 +208,7 @@
             text-align: center;
             max-width: 550px;
             width: 100%;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .timer-title {
@@ -307,6 +416,7 @@
         }
 
         @media(max-width: 600px) {
+            .lock-box { padding: 36px 24px; }
             .hero-title { font-size: 1.8rem; }
             .gallery { grid-template-columns: 1fr; }
             .timer-grid { gap: 8px; }
@@ -317,10 +427,22 @@
 </head>
 <body>
 
-<!-- ===== MAIN CONTENT (OPENS DIRECTLY) ===== -->
-<main id="mainContent">
+<div id="lockScreen">
+    <div class="lock-petals" id="lockPetals"></div>
+    <div class="lock-box">
+        <span class="lock-icon">🔐</span>
+        <h2>الموقع ده مخصص لشخص واحد بس</h2>
+        <p>اكتبي كلمة السر الخاصة بنا.. وافتحي قلبي</p>
+        <div class="input-wrap">
+            <input type="password" id="passwordInput" placeholder="● ● ● ● ● ● ● ●" autocomplete="off">
+        </div>
+        <button class="unlock-btn" onclick="checkLovePassword()">افتح قلبي ❤️</button>
+        <p id="errorMessage">الباسورد غلط.. ركزي وافتكري الكلمة السرية 😉</p>
+    </div>
+</div>
 
-    <!-- HERO -->
+<main id="mainContent" style="display:none;">
+
     <section class="hero">
         <p class="eyebrow">رسالة من القلب</p>
         <h1 class="hero-title">مقدرش على زعلك يا أجمل حاجة في دنيتي ❤️</h1>
@@ -328,7 +450,6 @@
             الدنيا بتبقى وحشة أوي والوقت مبيعديش وانتي زعلانة مني.. جمعتلك كل صورنا وذكرياتنا هنا عشان أقولك إنك أغلى حاجة في عمري، ومفيش أي حاجة تستاهل إننا نزعل من بعض.. سامحيني يا قلبي المستحيل يلاقي زيك.
         </p>
 
-        <!-- COUNTDOWN TIMER -->
         <div class="timer-section">
             <div class="timer-title">⏳ الوقت اللي عدا على أجمل يوم في حياتنا (١٠-٨-٢٠٢٥) ❤️</div>
             <div class="timer-grid">
@@ -354,20 +475,17 @@
         <p class="scroll-hint">↓ &nbsp; اسكرولي شوفي ذكرياتنا &nbsp; ↓</p>
     </section>
 
-    <!-- GALLERY -->
     <section class="gallery-section">
         <h2 class="section-title">كل صورة بتحكي قصة 💕</h2>
         <div class="gallery" id="loveGallery"></div>
     </section>
 
-    <!-- FOOTER -->
     <footer>
         <h3 class="footer-title">مستني ضحكتك تنور دنيتي تاني</h3>
         <p class="footer-sub">بحبك من غير حدود، وزعلك بيوجعني أكتر من أي حاجة تانية في الدنيا دي. أنا آسف يا قلبي.</p>
     </footer>
 
-    <!-- Fixed Floating Music Player -->
-    <div id="music-control-bar">
+    <div id="music-control-bar" style="display:none;">
         <div id="youtube-player" style="display:none;"></div>
         <button class="play-music-btn" onclick="toggleMusic()" id="musicBtn">▶️</button>
         <span class="music-text">مكانك في قلبي · عمرو دياب 🎵</span>
@@ -376,11 +494,46 @@
 </main>
 
 <script>
-    // ===== RUN IMMEDIATELY ONDOCUMENT READY =====
-    window.addEventListener('DOMContentLoaded', () => {
-        startHeartsRain();
-        initGallery();
-        startCountdown();
+    // ===== LOCK SCREEN PETALS =====
+    const lockPetals = document.getElementById('lockPetals');
+    const petalEmojis = ['🌸','🌺','💮','🌷','❤️','💕'];
+    for (let i = 0; i < 18; i++) {
+        const p = document.createElement('div');
+        p.className = 'petal';
+        p.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.fontSize = (Math.random() * 12 + 14) + 'px';
+        p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+        p.style.animationDelay = (Math.random() * 6) + 's';
+        lockPetals.appendChild(p);
+    }
+
+    // ===== PASSWORD CHECK =====
+    function checkLovePassword() {
+        var inputVal = document.getElementById('passwordInput').value.trim().toLowerCase();
+        var errorMsg = document.getElementById('errorMessage');
+        var lockScreen = document.getElementById('lockScreen');
+        var mainContent = document.getElementById('mainContent');
+
+        if (inputVal === "ahmedxxsafia") {
+            lockScreen.style.display = 'none';
+            mainContent.style.display = 'block';
+            startHeartsRain();
+            initGallery();
+            startCountdown();
+            // Show music control bar and play music
+            document.getElementById('music-control-bar').style.display = 'flex';
+            setTimeout(startMusic, 400);
+        } else {
+            errorMsg.style.display = 'block';
+            document.getElementById('passwordInput').value = '';
+        }
+    }
+
+    document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            checkLovePassword();
+        }
     });
 
     // ===== COUNTDOWN TIMER =====
@@ -418,7 +571,7 @@
         }, 400);
     }
 
-    // ===== GALLERY WITH MULTI-FALLBACK =====
+    // ===== GALLERY WITH ROBUST FALLBACK HANDLING =====
     const loveMessages = [
         "مقدرش على زعلك.. ضحكتك بالدنيا كلها 💖",
         "كل لحظة هنا بتفكرني بقد إيه أنا محظوظ بكي ✨",
@@ -444,6 +597,7 @@
         const gallery = document.getElementById('loveGallery');
         const indices = Array.from({length: 29}, (_, k) => k + 1);
         
+        // Shuffle images
         for (let i = indices.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [indices[i], indices[j]] = [indices[j], indices[i]];
@@ -463,8 +617,7 @@
                          data-index="${i}" 
                          data-attempt="0" 
                          alt="ذكرى حلوة" 
-                         class="lazy-img" 
-                         onerror="tryNextImageFormat(this)">
+                         class="lazy-img">
                 </div>
                 <div class="card-body">
                     <p class="card-num">${cardLabels[position % cardLabels.length]}</p>
@@ -477,6 +630,7 @@
         initLazyLoadingAndObserver();
     }
 
+    // Secure Image Fallback Execution Only Upon Actual Failure
     function tryNextImageFormat(img) {
         const index = img.getAttribute('data-index');
         let attempt = parseInt(img.getAttribute('data-attempt') || "0") + 1;
@@ -488,15 +642,19 @@
         const formats = [
             `${numPadded}.jpeg`,
             `${numPadded}.jpg`,
+            `${numPadded}.png`,
+            `${numPadded}.webp`,
             `${numPadded}.JPG`,
             `${numPadded}.JPEG`,
             `${numRaw}.jpeg`,
-            `${numRaw}.jpg`
+            `${numRaw}.jpg`,
+            `${numRaw}.png`
         ];
 
         if (attempt < formats.length) {
             img.src = baseURL + formats[attempt];
         } else {
+            // If all extensions fail, display a beautiful fallback pink card block instead of a broken icon
             img.style.display = 'none';
             img.parentElement.style.background = 'linear-gradient(135deg, #ffd6e0, #fff0f3)';
         }
@@ -521,6 +679,12 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const img = entry.target;
+                    
+                    // Wire up the error event handler programmatically right before setting src
+                    img.addEventListener('error', function() {
+                        tryNextImageFormat(img);
+                    });
+                    
                     img.src = img.getAttribute('data-src');
                     img.onload = () => { img.classList.add('loaded'); };
                     imgObserver.unobserve(img);
@@ -541,6 +705,14 @@
             playerVars: { autoplay: 0, controls: 0, loop: 1, playlist: 'X-k9_eTW7bg', enablejsapi: 1, origin: window.location.origin },
             events: { onReady: function(e) { e.target.setVolume(85); } }
         });
+    }
+
+    function startMusic() {
+        if (ytPlayer && ytPlayer.playVideo) {
+            ytPlayer.playVideo();
+            musicPlaying = true;
+            document.getElementById('musicBtn').textContent = '⏸️';
+        }
     }
 
     function toggleMusic() {
