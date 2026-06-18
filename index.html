@@ -332,3 +332,254 @@
 
         .card-num {
             font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: var(--rose-soft);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .card-msg {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--mid-text);
+            line-height: 1.6;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--rose-deep);
+            color: var(--rose-pale);
+            padding: 70px 24px;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-family: 'Amiri', serif;
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .footer-sub {
+            font-size: 1.05rem;
+            opacity: 0.75;
+            line-height: 1.9;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* ===== MUSIC PLAYER BAR ===== */
+        #music-control-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2000;
+            background: rgba(181, 23, 58, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.2);
+            width: max-content;
+            max-width: 90%;
+        }
+
+        .play-music-btn {
+            background: white;
+            color: var(--rose-deep);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
+        }
+
+        .play-music-btn:active {
+            transform: scale(0.9);
+        }
+
+        .music-text {
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        @media(max-width: 600px) {
+            .lock-box { padding: 36px 24px; }
+            .hero-title { font-size: 1.8rem; }
+            .gallery { grid-template-columns: 1fr; }
+            .timer-grid { gap: 8px; }
+            .timer-num { font-size: 1.25rem; }
+        }
+    </style>
+    <script src="https://www.youtube.com/iframe_api"></script>
+</head>
+<body>
+
+<div id="lockScreen">
+    <div class="lock-petals" id="lockPetals"></div>
+    <div class="lock-box">
+        <span class="lock-icon">🔐</span>
+        <h2>الموقع ده مخصص لشخص واحد بس</h2>
+        <p>اكتبي كلمة السر الخاصة بنا.. وافتحي قلبي</p>
+        <div class="input-wrap">
+            <input type="password" id="passwordInput" placeholder="● ● ● ● ● ● ● ●" autocomplete="off">
+        </div>
+        <button class="unlock-btn" onclick="checkLovePassword()">افتح قلبي ❤️</button>
+        <p id="errorMessage">الباسورد غلط.. ركزي وافتكري الكلمة السرية 😉</p>
+    </div>
+</div>
+
+<main id="mainContent" style="display:none;">
+
+    <section class="hero">
+        <p class="eyebrow">رسالة من القلب</p>
+        <h1 class="hero-title">مقدرش على زعلك يا أجمل حاجة في دنيتي ❤️</h1>
+        <p class="hero-body">
+            الدنيا بتبقى وحشة أوي والوقت مبيعديش وانتي زعلانة مني.. جمعتلك كل صورنا وذكرياتنا هنا عشان أقولك إنك أغلى حاجة في عمري، ومفيش أي حاجة تستاهل إننا نزعل من بعض.. سامحيني يا قلبي المستحيل يلاقي زيك.
+        </p>
+
+        <div class="timer-section">
+            <div class="timer-title">⏳ الوقت اللي عدا على أجمل يوم في حياتنا (١٠-٨-٢٠٢٥) ❤️</div>
+            <div class="timer-grid">
+                <div class="timer-block">
+                    <span class="timer-num" id="timer-days">00</span>
+                    <span class="timer-label">يوم</span>
+                </div>
+                <div class="timer-block">
+                    <span class="timer-num" id="timer-hours">00</span>
+                    <span class="timer-label">ساعة</span>
+                </div>
+                <div class="timer-block">
+                    <span class="timer-num" id="timer-minutes">00</span>
+                    <span class="timer-label">دقيقة</span>
+                </div>
+                <div class="timer-block">
+                    <span class="timer-num" id="timer-seconds">00</span>
+                    <span class="timer-label">ثانية</span>
+                </div>
+            </div>
+        </div>
+
+        <p class="scroll-hint">↓ &nbsp; اسكرولي شوفي ذكرياتنا &nbsp; ↓</p>
+    </section>
+
+    <section class="gallery-section">
+        <h2 class="section-title">كل صورة بتحكي قصة 💕</h2>
+        <div class="gallery" id="loveGallery"></div>
+    </section>
+
+    <footer>
+        <h3 class="footer-title">مستني ضحكتك تنور دنيتي تاني</h3>
+        <p class="footer-sub">بحبك من غير حدود، وزعلك بيوجعني أكتر من أي حاجة تانية في الدنيا دي. أنا آسف يا قلبي.</p>
+    </footer>
+
+    <div id="music-control-bar" style="display:none;">
+        <div id="youtube-player" style="display:none;"></div>
+        <button class="play-music-btn" onclick="toggleMusic()" id="musicBtn">▶️</button>
+        <span class="music-text">مكانك في قلبي · عمرو دياب 🎵</span>
+    </div>
+
+</main>
+
+<script>
+    // ===== LOCK SCREEN PETALS =====
+    const lockPetals = document.getElementById('lockPetals');
+    const petalEmojis = ['🌸','🌺','💮','🌷','❤️','💕'];
+    for (let i = 0; i < 18; i++) {
+        const p = document.createElement('div');
+        p.className = 'petal';
+        p.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.fontSize = (Math.random() * 12 + 14) + 'px';
+        p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+        p.style.animationDelay = (Math.random() * 6) + 's';
+        lockPetals.appendChild(p);
+    }
+
+    // ===== PASSWORD CHECK =====
+    function checkLovePassword() {
+        var inputVal = document.getElementById('passwordInput').value.trim().toLowerCase();
+        var errorMsg = document.getElementById('errorMessage');
+        var lockScreen = document.getElementById('lockScreen');
+        var mainContent = document.getElementById('mainContent');
+
+        if (inputVal === "ahmedxxsafia") {
+            lockScreen.style.display = 'none';
+            mainContent.style.display = 'block';
+            startHeartsRain();
+            initGallery();
+            startCountdown();
+            // Show music control bar and play music
+            document.getElementById('music-control-bar').style.display = 'flex';
+            setTimeout(startMusic, 400);
+        } else {
+            errorMsg.style.display = 'block';
+            document.getElementById('passwordInput').value = '';
+        }
+    }
+
+    document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            checkLovePassword();
+        }
+    });
+
+    // ===== COUNTDOWN TIMER =====
+    function startCountdown() {
+        const startDate = new Date("August 10, 2025 00:00:00").getTime();
+
+        setInterval(() => {
+            const now = new Date().getTime();
+            const difference = now - startDate;
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById("timer-days").textContent = String(days).padStart(2, '0');
+            document.getElementById("timer-hours").textContent = String(hours).padStart(2, '0');
+            document.getElementById("timer-minutes").textContent = String(minutes).padStart(2, '0');
+            document.getElementById("timer-seconds").textContent = String(seconds).padStart(2, '0');
+        }, 1000);
+    }
+
+    // ===== HEARTS RAIN =====
+    function startHeartsRain() {
+        setInterval(() => {
+            const h = document.createElement('div');
+            h.className = 'heart';
+            h.textContent = ['❤️','💕','💖','💗','🌹'][Math.floor(Math.random()*5)];
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = (Math.random() * 14 + 14) + 'px';
+            h.style.opacity = Math.random() * 0.5 + 0.4;
+            h.style.animationDuration = (Math.random() * 4 + 3) + 's';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 6000);
+        }, 400);
+    }
+
+    // ===== GALLERY WITH ROBUST FALLBACK HANDLING =====
+    const loveMessages = [
+        "مقدرش على زعلك.. ضحكتك بالدنيا كلها 💖",
+        "كل لحظة هنا بتفكرني بقد إيه أنا محظوظ بكي ✨",
+        "انتي الأمان اللي مش عاوز أخسره أبداً 🥰",
+        "زعلك على عيني، ومستحيل أهون عليا تسيبيني زعلان",
+        "يا رب يديمك في حياتي وينهي أي زعل بيننا 🔐",
+        "مكانك في قلبي ثابت ومبيغيروش أي موقف",
+        "سامحيني.. مفيش حد بيحبك قدي في الدنيا دي كلها",
+        "انتي النجمة اللي بتنور عتمة أيامي ⭐",
+        "كل صورة من دول وراها حكاية حلوة عشتها معاكي",
+        "الدنيا بت
