@@ -37,7 +37,6 @@
             justify-content: center;
             align-items: center;
             background: radial-gradient(ellipse at 60% 40%, #ffd6e0 0%, #ffb3c6 40%, #e63262 100%);
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .lock-petals {
@@ -69,24 +68,12 @@
             text-align: center;
             max-width: 420px;
             width: 92%;
-            animation: boxFloat 4s ease-in-out infinite;
-        }
-
-        @keyframes boxFloat {
-            0%,100% { transform: translateY(0); }
-            50%      { transform: translateY(-8px); }
         }
 
         .lock-icon {
             font-size: 3.5rem;
             margin-bottom: 18px;
             display: block;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%,100% { transform: scale(1); }
-            50%      { transform: scale(1.12); }
         }
 
         .lock-box h2 {
@@ -121,7 +108,8 @@
             background: var(--rose-blush);
             color: var(--dark-text);
             transition: border-color 0.3s, box-shadow 0.3s;
-            letter-spacing: 4px;
+            /* طريقة إخفاء الباسورد كحروف نصية بديلة لمنع تهنيج المتصفح */
+            -webkit-text-security: disc;
         }
 
         .lock-box input:focus {
@@ -140,13 +128,11 @@
             font-weight: 700;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
             box-shadow: 0 8px 20px rgba(182,23,58,0.3);
         }
 
         .unlock-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 28px rgba(182,23,58,0.4);
         }
 
         #errorMessage {
@@ -367,131 +353,3 @@
 
         /* ===== FOOTER ===== */
         footer {
-            background: var(--rose-deep);
-            color: var(--rose-pale);
-            padding: 70px 24px;
-            text-align: center;
-        }
-
-        .footer-title {
-            font-family: 'Amiri', serif;
-            font-size: 1.8rem;
-            color: white;
-            margin-bottom: 16px;
-        }
-
-        .footer-sub {
-            font-size: 1.05rem;
-            opacity: 0.75;
-            line-height: 1.9;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        @media(max-width: 600px) {
-            .lock-box { padding: 36px 24px; }
-            .hero-title { font-size: 1.8rem; }
-            .gallery { grid-template-columns: 1fr; }
-            .timer-grid { gap: 8px; }
-            .timer-num { font-size: 1.25rem; }
-        }
-    </style>
-    <script src="https://www.youtube.com/iframe_api"></script>
-</head>
-<body>
-
-<div id="lockScreen">
-    <div class="lock-petals" id="lockPetals"></div>
-    <div class="lock-box">
-        <span class="lock-icon">🔐</span>
-        <h2>الموقع ده مخصص لشخص واحد بس</h2>
-        <p>اكتبي كلمة السر الخاصة بنا.. وافتحي قلبي</p>
-        <div class="input-wrap">
-            <input type="password" id="passwordInput" placeholder="● ● ● ● ● ● ● ●" autocomplete="off">
-        </div>
-        <button class="unlock-btn" onclick="validatePassword()">افتح قلبي ❤️</button>
-        <p id="errorMessage">الباسورد غلط.. ركزي وافتكري الكلمة السرية 😉</p>
-    </div>
-</div>
-
-<main id="mainContent" style="display:none;">
-
-    <section class="hero">
-        <p class="eyebrow">رسالة من القلب</p>
-        <h1 class="hero-title">مقدرش على زعلك يا أجمل حاجة في دنيتي ❤️</h1>
-        <p class="hero-body">
-            الدنيا بتبقى وحشة أوي والوقت مبيعديش وانتي زعلانة مني.. جمعتلك كل صورنا وذكرياتنا هنا عشان أقولك إنك أغلى حاجة في عمري، ومفيش أي حاجة تستاهل إننا نزعل من بعض.. سامحيني يا قلبي المستحيل يلاقي زيك.
-        </p>
-
-        <div class="timer-section">
-            <div class="timer-title">⏳ الوقت اللي عدا على أجمل يوم في حياتنا (١٠-٨-٢٠٢٥) ❤️</div>
-            <div class="timer-grid">
-                <div class="timer-block">
-                    <span class="timer-num" id="timer-days">00</span>
-                    <span class="timer-label">يوم</span>
-                </div>
-                <div class="timer-block">
-                    <span class="timer-num" id="timer-hours">00</span>
-                    <span class="timer-label">ساعة</span>
-                </div>
-                <div class="timer-block">
-                    <span class="timer-num" id="timer-minutes">00</span>
-                    <span class="timer-label">دقيقة</span>
-                </div>
-                <div class="timer-block">
-                    <span class="timer-num" id="timer-seconds">00</span>
-                    <span class="timer-label">ثانية</span>
-                </div>
-            </div>
-        </div>
-
-        <p class="scroll-hint">↓ &nbsp; اسكرولي شوفي ذكرياتنا &nbsp; ↓</p>
-    </section>
-
-    <section class="gallery-section">
-        <h2 class="section-title">كل صورة بتحكي قصة 💕</h2>
-        <div class="gallery" id="loveGallery"></div>
-    </section>
-
-    <footer>
-        <h3 class="footer-title">مستني ضحكتك تنور دنيتي تاني</h3>
-        <p class="footer-sub">بحبك من غير حدود، وزعلك بيوجعني أكتر من أي حاجة تانية في الدنيا دي. أنا آسف يا قلبي.</p>
-    </footer>
-
-<div id="yt-player-wrap" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:900;display:none;background:rgba(181,23,58,0.92);backdrop-filter:blur(10px);border-radius:50px;padding:10px 20px;align-items:center;gap:12px;box-shadow:0 8px 25px rgba(0,0,0,0.2);">
-    <div id="youtube-player" style="display:none;"></div>
-    <button onclick="toggleMusic()" id="musicBtn" style="background:none;border:none;color:white;font-size:1.4rem;cursor:pointer;">▶️</button>
-    <span style="color:white;font-family:'Tajawal',sans-serif;font-size:0.9rem;font-weight:700;">مكانك في قلبي · عمرو دياب</span>
-    <input type="range" id="volumeSlider" min="0" max="100" value="70" oninput="setVolume(this.value)" style="width:80px;accent-color:#ffd6e0;cursor:pointer;">
-</div>
-
-</main>
-
-<script>
-    // ===== LOCK SCREEN PETALS =====
-    const lockPetals = document.getElementById('lockPetals');
-    const petalEmojis = ['🌸','🌺','💮','🌷','❤️','💕'];
-    for (let i = 0; i < 18; i++) {
-        const p = document.createElement('div');
-        p.className = 'petal';
-        p.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
-        p.style.left = Math.random() * 100 + 'vw';
-        p.style.fontSize = (Math.random() * 12 + 14) + 'px';
-        p.style.animationDuration = (Math.random() * 5 + 5) + 's';
-        p.style.animationDelay = (Math.random() * 6) + 's';
-        lockPetals.appendChild(p);
-    }
-
-    // ===== PASSWORD CHECK =====
-    const CORRECT_PASSWORD = "ahmedxxsafia";
-
-    function validatePassword() {
-        let input = document.getElementById('passwordInput').value.trim().toLowerCase();
-        const errorMsg = document.getElementById('errorMessage');
-        const lockScreen = document.getElementById('lockScreen');
-        const mainContent = document.getElementById('mainContent');
-
-        if (input === CORRECT_PASSWORD) {
-            lockScreen.style.opacity = '0';
-            lockScreen.style.transform = 'scale(1.02)';
-            setTimeout(() => {
