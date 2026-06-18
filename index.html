@@ -195,7 +195,6 @@
 </head>
 <body>
 
-    <!-- شاشة القفل التفاعلية -->
     <div id="lockScreen">
         <div class="lock-box">
             <h2>الموقع ده مخصص لشخص واحد بس 🔐</h2>
@@ -281,13 +280,14 @@
             "حقك عليا، والمرة دي وكل مرة أنا اللي هجيلك وأصالحك 💕"
         ];
 
-        // 4. توليد الـ 29 صورة بشكل عشوائي تماماً
+        // 4. توليد الـ 29 صورة بشكل عشوائي
         const galleryContainer = document.getElementById('loveGallery');
         const totalPhotos = 29;
 
         let photoNumbers = [];
         for (let i = 1; i <= totalPhotos; i++) {
-            photoNumbers.push(String(i).padStart(2, '0'));
+            // التعديل هنا: إضافة صفر قبل كل الأرقام
+            photoNumbers.push("0" + i);
         }
 
         function shuffleArray(array) {
@@ -299,7 +299,6 @@
 
         shuffleArray(photoNumbers);
 
-        // تم التعديل هنا لقراءة الصور بصيغة .jpeg
         photoNumbers.forEach((photoNumber) => {
             const randomMessage = loveMessages[Math.floor(Math.random() * loveMessages.length)];
 
