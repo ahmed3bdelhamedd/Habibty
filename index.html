@@ -1,131 +1,48 @@
-import { useEffect, useState } from "react";
-import { motion } from "motion/react";
-import { Heart, Camera } from "lucide-react";
-import { MemoryCard } from "../types";
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>إلى صفية ❤️</title>
+    <style>
+        body { background-color: #fff0f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; padding: 20px; }
+        h1 { color: #d81b60; animation: bounce 2s infinite; }
+        .gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px; }
+        .card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 280px; transition: transform 0.3s; }
+        .card:hover { transform: scale(1.05); }
+        img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; }
+        .caption { margin-top: 10px; color: #555; font-weight: bold; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    </style>
+</head>
+<body>
 
-export default function MemoryGallery() {
-  const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
+    <h1>رسالة حب لصفية ❤️</h1>
+    <p>كل صورة هنا بتحكي ذكرى حلوة بيننا...</p>
 
-  const formatArabicNumber = (num: number) => {
-    const englishDigits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-    const arabicDigits = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
-    return num
-      .toString()
-      .split("")
-      .map((char) => {
-        const index = englishDigits.indexOf(char);
-        return index !== -1 ? arabicDigits[index] : char;
-      })
-      .join("");
-  };
+    <div class="gallery" id="gallery"></div>
 
-  const captions = [
-    "لما عيوننا اتقابلت لأول مرة وعرفت وقتها إن حياتي بدأت تتغير وتتملي بالورد والأمل ❤️",
-    "كل خروجة وكل لقطة وكل ضحكة صوّرناها، محفورة في قلبي وروحي ومش ممكن تروح أبداً 📸",
-    "القهوة سوا وكلامنا اللي بيطول بالساعات ومبنشبعش منه أبداً.. وجودك بيملا الدنيا طمأنينة ودفا ☕",
-    "المكان الهادي والكلام اللي من القلب اللي بيخليني أحس بالأمان التام.. انتي بيتي وعيلتي وكل ناسي 🌟",
-    "كل الغروب وكل مكان روحناه سوا بيشهد على حبنا وضحكتنا.. ولسه هنملا الدنيا ذكريات جميلة 🌅",
-    "انتي الوردة الوحيدة في بستان عمري اللي ماليش غيرها، ومقدرش أشوف فيها أي ذرة حزن أو زعل 🌹",
-    "ضحكتك الصافية اللي بتهوّن عليا تعب الأيام وصعوبتها.. يارب تدوم وما تِغيبشِ أبدًا ✨",
-    "سيلفي مجنون مليان شقاوة وفرحة مكنتش تسعنا.. إنتي الطفلة الجميلة اللي تملكت قلبي ودنيتي 🤪❤️",
-    "طريقتك وأسلوبك وتفاصيلك الصغيرة اللي بموت فيها.. كل غيرة وكل ضحكة ليها طعم خاص معاكي 🥰",
-    "اليوم اللي عاهدت نفسي فيه إني هفضل جنبك لآخر العمر وسندك حبيبك اللي مستحيل يخذلك 🤝♥️",
-    "الأكلات الغريبة اللي جربناها سوا والضحك على النتيجة.. كل تفصيلة صغيرة جنبك بتتحول لعيد 🍕",
-    "لما بنمشي في المطر أو البرد وإيدك في إيدي.. بحس بدفا الكوكب كله متجمع هنا ❄️",
-    "رسايلك وجواباتك اللي بحتفظ بكل حرف فيها وبقرأها لما بتوحشيني كأنها أول مرة ✉️",
-    "نظرة عيونك اللي بتفهمني من غير ما أنطق ولا كلمة.. لغة خاصة بينا إحنا وبس 👀💖",
-    "تمشيتنا الطويلة وإحنا مروقين وبنحكي عن أحلامنا الكبيرة.. خطوة بخطوة هنوصل لكل حاجة سوا 👣",
-    "اليوم اللي واجهنا فيه الدنيا كلها عشان نفضل مع بعض.. حبنا أقوى من أي ظرف وأي زعل 💪❤️",
-    "ضحكتك الرائعة اللي بتخليني أبتسم غصباً عني.. إنتي السعادة والبهجة الحقيقية في أي مكان 🎶",
-    "الوردة اللي جيبتهالك وفضلتي محتفظة بيها كأنها كنز.. تفاصيلك الرقيقة دي بتزود غلاوتك في قلبي 💐",
-    "لما بنقعد نخطط لمستقبل بيتنا الصغير وتفاصيله الدافية.. يارب يجمعنا على خير ويبارك لنا 🏠",
-    "أوقات التعب والخوف اللي بنلاقي فيها بعض دايماً في الظهر والسند.. حب حقيقي مبتهزهوش ريح 🌬️",
-    "الخروجة اللي ملهاش ترتيب وتفاجئنا باليوم وجماله.. أحسن اللحظات هي اللي بتيجي عفوية معاكي 🎈",
-    "المزيكا والأغاني اللي بتفكرنا ببعض وبندندنها سوا.. إنتي اللحن الجميل في حياتي 🎵",
-    "طريقة زعلك الطفولية اللي بتخليني عايز أخبيكي جوة قلبي وأصالحك في كسر ثانية 🤗",
-    "ذكرياتنا الجميلة واللحظات البسيطة.. وجودك نور حياتنا كلها وخلا للدفا طعم تاني 🤍",
-    "كل صورة طالعين فيها بنضحك من قلبنا بجد.. الضحكة دي هي غايتي وسر بقائي سعيداً 😁",
-    "تفاصيل لبسك وألوانك اللي بتليق عليكي كأنك ملكة متوجة.. شياكتك وبساطتك بتخطف عيني وقلبي 👑",
-    "لما بنتضامن سوا في الرأي ونتحد على الكل.. ثنائي لا يمكن مواجهته ولا هزيمته 🎯",
-    "دعوتنا سوا في ساعة استجابة بقلوب مليانة رجاء ويقين.. ربنا يديمك في عمري ويجعل دنيتي جنة بيكي 🤲🏼",
-    "العهد اللي بينا هيفضل مكتوب بماء الذهب في سجّل قلبي.. بحبك النهاردة وأكتر بكتير بكرة وما بعد الأبد ♾️"
-  ];
+    <script>
+        const captions = [
+            "أول لقاء لنا.. كان أجمل صدفة", "ضحكتك أجمل شيء في يومي", "معاكِ كل وقتي بيحلو", "عيونك فيها أمان العالم",
+            "ذكريات لا تنسى", "أحب تفاصيلك الصغيرة", "أنتِ النور في حياتي", "كل يوم بحبك أكتر", "أحلى أيام عمري معاكِ",
+            "أنتِ قلبي وروحي", "ضحكتك بتدوب قلبي", "وجودك جنبي كفاية", "مكانك في قلبي محجوز", "أحلى صدفة في حياتي",
+            "حياتي من غيرك مالهاش معنى", "أنتِ فرحة أيامي", "ما بتخيل يومي من غيرك", "بحب طريقتك في الكلام",
+            "أنتِ كل أحلامي", "يا أغلى من روحي", "أنتِ الأمل اللي بشوفه", "أجمل هدية من القدر", "أحلى صورة ليكي",
+            "نظرة عينيكِ بتسحرني", "أنتِ اللي بكمل معاكِ", "يا أجمل ما في حياتي", "أحبك حب ما له حدود",
+            "أنتِ عالمي كله", "باقي عمري لكِ يا صفية"
+        ];
 
-  // Map 29 images dynamically following "01" to "029" logic where 0 is prepended
-  const memories: MemoryCard[] = captions.map((caption, index) => {
-    const num = index + 1;
-    const paddedIndex = "0" + num; // Prepending '0' to index -> '01' to '029' (which is correct and automatically handles 3 chars starting from 10)
-    return {
-      id: num.toString(),
-      imageUrl: `./images/${paddedIndex}.jpg`,
-      numberLabel: `الذكرى رقم ${formatArabicNumber(num)} 💕`,
-      caption: caption,
-    };
-  });
+        // ضع رابط الـ Repository الخاص بك هنا بدلاً من الرابط الوهمي بالأسفل
+        const baseUrl = "https://raw.githubusercontent.com/USER_NAME/REPO_NAME/main/"; 
+        const gallery = document.getElementById('gallery');
 
-  const handleImageLoad = (id: string) => {
-    setLoadedImages((prev) => ({ ...prev, [id]: true }));
-  };
-
-  return (
-    <div className="w-full">
-      <div className="font-serif text-3xl font-extrabold text-center text-rose-deep mb-4 flex items-center justify-center gap-2">
-        <Camera className="w-7 h-7 text-rose-mid" />
-        <h2>كل صورة بتحكي قصة جمِيلة 💕</h2>
-      </div>
-      <p className="text-center text-mid-text text-base max-w-lg mx-auto mb-10 leading-relaxed font-medium">
-        صوّرنا وذكرياتنا هي الشاهد الأساسي على الأيام الحلوة اللي عشناها سوا.. والزعل ما هو إلا لحظة عابرة وهتعدي بضحكتك البهية.
-      </p>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {memories.map((memory, index) => (
-          <motion.div
-            key={memory.id}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ delay: (index % 6) * 0.08, duration: 0.6 }}
-            whileHover={{ y: -8, scale: 1.02, rotate: index % 2 === 0 ? 1 : -1 }}
-            className="bg-white p-4 pb-6 rounded-2xl shadow-[0_10px_30px_rgba(182,23,58,0.06)] border border-rose-pale hover:border-rose-soft/50 transition-all duration-300 relative group flex flex-col justify-between"
-          >
-            {/* Soft decorative tape on top of Polaroid card */}
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-rose-pale/35 backdrop-blur-xs skew-x-6 rotate-2 border-x border-dashed border-rose-soft/20 z-20 pointer-events-none" />
-
-            <div className="w-full h-72 sm:h-80 bg-rose-blush/40 rounded-xl overflow-hidden relative border border-rose-pale/50 flex-none mb-4">
-              {/* Fallback romantic placeholder or shimmer loader */}
-              {!loadedImages[memory.id] && (
-                <div className="absolute inset-0 bg-gradient-to-tr from-rose-pale/30 to-rose-blush animate-pulse flex items-center justify-center">
-                  <Heart className="w-8 h-8 text-rose-soft/40 animate-ping" />
-                </div>
-              )}
-
-              <img
-                src={memory.imageUrl}
-                alt={memory.numberLabel}
-                onLoad={() => handleImageLoad(memory.id)}
-                referrerPolicy="no-referrer"
-                className={`w-full h-full object-cover transition-opacity duration-700 ${
-                  loadedImages[memory.id] ? "opacity-100 scale-100" : "opacity-0 scale-95"
-                } group-hover:scale-105 duration-700`}
-              />
-
-              {/* Gentle Overlay Heart */}
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 via-transparent to-transparent h-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
-                <Heart className="w-7 h-7 text-rose-pale fill-rose-mid drop-shadow-md animate-bounce" />
-              </div>
-            </div>
-
-            <div className="content-area">
-              <span className="text-xs sm:text-sm font-bold text-rose-soft tracking-wider block mb-1.5 font-sans">
-                {memory.numberLabel}
-              </span>
-              <p className="text-dark-text text-base leading-relaxed font-semibold font-serif">
-                {memory.caption}
-              </p>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  );
-}
+        for (let i = 1; i <= 29; i++) {
+            let num = i.toString().padStart(2, '0');
+            let card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `<img src="${baseUrl}${num}.jpeg"><div class="caption">${captions[i-1]}</div>`;
+            gallery.appendChild(card);
+        }
+    </script>
+</body>
+</html>
