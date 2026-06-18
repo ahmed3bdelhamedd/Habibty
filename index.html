@@ -226,7 +226,6 @@
             const errorMsg = document.getElementById('errorMessage');
             const lockScreen = document.getElementById('lockScreen');
 
-            // تم تغيير الباسورد هنا حسب طلبك
             const correctPassword = "ahmedxxsafia"; 
 
             if (input === correctPassword) {
@@ -286,13 +285,11 @@
         const galleryContainer = document.getElementById('loveGallery');
         const totalPhotos = 29;
 
-        // إنشاء مصفوفة بأرقام الصور من 1 لـ 29
         let photoNumbers = [];
         for (let i = 1; i <= totalPhotos; i++) {
             photoNumbers.push(String(i).padStart(2, '0'));
         }
 
-        // دالة لعمل ترتيب عشوائي (Shuffle) للمصفوفات
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -300,10 +297,9 @@
             }
         }
 
-        // لخبطة أرقام الصور علشان تظهر عشوائية
         shuffleArray(photoNumbers);
 
-        // بناء الجاليري بالترتيب العشوائي الجديد
+        // تم التعديل هنا لقراءة الصور بصيغة .jpeg
         photoNumbers.forEach((photoNumber) => {
             const randomMessage = loveMessages[Math.floor(Math.random() * loveMessages.length)];
 
@@ -311,7 +307,7 @@
             card.classList.add('photo-card');
 
             card.innerHTML = `
-                <img src="${photoNumber}.jpg" alt="ذكرى رقم ${photoNumber}">
+                <img src="${photoNumber}.jpeg" alt="ذكرى رقم ${photoNumber}">
                 <div class="photo-desc">${randomMessage}</div>
             `;
 
