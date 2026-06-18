@@ -401,7 +401,7 @@
             justify-content: center;
             align-items: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            transition: transform 0.2s;
+            transition: transform scale(0.2s);
         }
 
         .play-music-btn:active {
@@ -434,9 +434,9 @@
         <h2>الموقع ده مخصص لشخص واحد بس</h2>
         <p>اكتبي كلمة السر الخاصة بنا.. وافتحي قلبي</p>
         <div class="input-wrap">
-            <input type="text" id="passwordInput" placeholder="● ● ● ● ● ● ● ●" autocomplete="off" autocorrect="off" autocapitalize="off">
+            <input type="text" id="passwordInput" placeholder="اكتبي الباسورد هنا..." autocomplete="off" autocorrect="off" autocapitalize="off">
         </div>
-        <button class="unlock-btn" onclick="checkLovePassword()">افتح قلبي ❤️</button>
+        <button class="unlock-btn" id="submitBtn">افتح قلبي ❤️</button>
         <p id="errorMessage">الباسورد غلط.. ركزي وافتكري الكلمة السرية 😉</p>
     </div>
 </div>
@@ -487,101 +487,12 @@
 
     <div id="music-control-bar" style="display:none;">
         <div id="youtube-player" style="display:none;"></div>
-        <button class="play-music-btn" onclick="toggleMusic()" id="musicBtn">▶️</button>
+        <button class="play-music-btn" id="musicBtn">▶️</button>
         <span class="music-text">مكانك في قلبي · عمرو دياب 🎵</span>
     </div>
 
 </main>
 
-<script>
-    // ===== LOCK SCREEN PETALS =====
-    const lockPetals = document.getElementById('lockPetals');
-    const petalEmojis = ['🌸','🌺','💮','🌷','❤️','💕'];
-    for (let i = 0; i < 18; i++) {
-        const p = document.createElement('div');
-        p.className = 'petal';
-        p.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
-        p.style.left = Math.random() * 100 + 'vw';
-        p.style.fontSize = (Math.random() * 12 + 14) + 'px';
-        p.style.animationDuration = (Math.random() * 5 + 5) + 's';
-        p.style.animationDelay = (Math.random() * 6) + 's';
-        lockPetals.appendChild(p);
-    }
-
-    // ===== PASSWORD CHECK (المعالجة المباشرة المضمونة) =====
-    function checkLovePassword() {
-        var inputElement = document.getElementById('passwordInput');
-        // تنظيف شامل للمسافات وحالة الأحرف
-        var inputVal = inputElement.value.trim().toLowerCase();
-        var errorMsg = document.getElementById('errorMessage');
-        var lockScreen = document.getElementById('lockScreen');
-        var mainContent = document.getElementById('mainContent');
-
-        if (inputVal === "ahmedxxsafia") {
-            lockScreen.style.display = 'none';
-            mainContent.style.display = 'block';
-            
-            startHeartsRain();
-            initGallery();
-            startCountdown();
-            
-            document.getElementById('music-control-bar').style.display = 'flex';
-            setTimeout(startMusic, 400);
-        } else {
-            errorMsg.style.display = 'block';
-            inputElement.value = '';
-        }
-    }
-
-    document.getElementById('passwordInput').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            checkLovePassword();
-        }
-    });
-
-    // ===== COUNTDOWN TIMER =====
-    function startCountdown() {
-        const startDate = new Date("August 10, 2025 00:00:00").getTime();
-
-        setInterval(() => {
-            const now = new Date().getTime();
-            const difference = now - startDate;
-
-            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-            document.getElementById("timer-days").textContent = String(days).padStart(2, '0');
-            document.getElementById("timer-hours").textContent = String(hours).padStart(2, '0');
-            document.getElementById("timer-minutes").textContent = String(minutes).padStart(2, '0');
-            document.getElementById("timer-seconds").textContent = String(seconds).padStart(2, '0');
-        }, 1000);
-    }
-
-    // ===== HEARTS RAIN =====
-    function startHeartsRain() {
-        setInterval(() => {
-            const h = document.createElement('div');
-            h.className = 'heart';
-            h.textContent = ['❤️','💕','💖','💗','🌹'][Math.floor(Math.random()*5)];
-            h.style.left = Math.random() * 100 + 'vw';
-            h.style.fontSize = (Math.random() * 14 + 14) + 'px';
-            h.style.opacity = Math.random() * 0.5 + 0.4;
-            h.style.animationDuration = (Math.random() * 4 + 3) + 's';
-            document.body.appendChild(h);
-            setTimeout(() => h.remove(), 6000);
-        }, 400);
-    }
-
-    // ===== GALLERY =====
-    const loveMessages = [
-        "مقدرش على زعلك.. ضحكتك بالدنيا كلها 💖",
-        "كل لحظة هنا بتفكرني بقد إيه أنا محظوظ بكي ✨",
-        "انتي الأمان اللي مش عاوز أخسره أبداً 🥰",
-        "زعلك على عيني، ومستحيل أهون عليا تسيبيني زعلان",
-        "يا رب يديمك في حياتي وينهي أي زعل بيننا 🔐",
-        "مكانك في قلبي ثابت ومبيغيروش أي موقف",
-        "سامحيني.. مفيش حد بيحبك قدي في الدنيا دي كلها",
-        "انتي النجمة اللي بتنور عتمة أيامي ⭐",
-        "كل صورة من دول ورا
+<script src="script.js"></script>
+</body>
+</html>
