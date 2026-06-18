@@ -37,7 +37,7 @@
             justify-content: center;
             align-items: center;
             background: radial-gradient(ellipse at 60% 40%, #ffd6e0 0%, #ffb3c6 40%, #e63262 100%);
-            transition: opacity 0.9s ease, transform 0.9s ease;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .lock-petals {
@@ -117,7 +117,6 @@
             font-size: 1.15rem;
             font-family: 'Tajawal', sans-serif;
             text-align: center;
-            letter-spacing: 2px;
             outline: none;
             background: var(--rose-blush);
             color: var(--dark-text);
@@ -127,11 +126,6 @@
         .lock-box input:focus {
             border-color: var(--rose-mid);
             box-shadow: 0 0 0 4px rgba(230,50,98,0.12);
-        }
-
-        .lock-box input::placeholder {
-            letter-spacing: 0;
-            color: #c8a0aa;
         }
 
         .unlock-btn {
@@ -154,23 +148,12 @@
             box-shadow: 0 12px 28px rgba(182,23,58,0.4);
         }
 
-        .unlock-btn:active { transform: translateY(0); }
-
         #errorMessage {
             color: var(--rose-deep);
             margin-top: 14px;
             font-size: 0.95rem;
             font-weight: 700;
             display: none;
-            animation: shake 0.4s ease;
-        }
-
-        @keyframes shake {
-            0%,100%{ transform: translateX(0); }
-            20%    { transform: translateX(-8px); }
-            40%    { transform: translateX(8px); }
-            60%    { transform: translateX(-5px); }
-            80%    { transform: translateX(5px); }
         }
 
         /* ===== HEARTS RAIN ===== */
@@ -194,10 +177,7 @@
             justify-content: center;
             align-items: center;
             padding: 80px 24px 60px;
-            background:
-                radial-gradient(ellipse at 80% 20%, rgba(230,50,98,0.08) 0%, transparent 60%),
-                radial-gradient(ellipse at 10% 80%, rgba(212,168,71,0.07) 0%, transparent 55%),
-                var(--cream);
+            background: var(--cream);
             position: relative;
             overflow: hidden;
         }
@@ -213,11 +193,9 @@
         .eyebrow {
             font-size: 0.9rem;
             letter-spacing: 4px;
-            text-transform: uppercase;
             color: var(--rose-soft);
             font-weight: 700;
             margin-bottom: 22px;
-            animation: fadeUp 1s ease both;
         }
 
         .hero-title {
@@ -227,15 +205,7 @@
             line-height: 1.4;
             max-width: 800px;
             margin-bottom: 30px;
-            animation: fadeUp 1s 0.2s ease both;
-        }
-
-        .hero-divider {
-            width: 80px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            margin: 0 auto 30px;
-            animation: fadeUp 1s 0.35s ease both;
+            text-align: center;
         }
 
         .hero-body {
@@ -243,12 +213,7 @@
             line-height: 2;
             max-width: 680px;
             color: var(--mid-text);
-            animation: fadeUp 1s 0.5s ease both;
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to   { opacity: 1; transform: translateY(0); }
+            text-align: center;
         }
 
         .scroll-hint {
@@ -256,7 +221,7 @@
             font-size: 0.85rem;
             color: var(--rose-soft);
             letter-spacing: 2px;
-            animation: fadeUp 1s 0.8s ease both, bobbing 2s 1.8s ease-in-out infinite;
+            animation: bobbing 2s ease-in-out infinite;
         }
 
         @keyframes bobbing {
@@ -268,16 +233,6 @@
         .gallery-section {
             padding: 60px 20px 80px;
             background: linear-gradient(180deg, var(--cream) 0%, var(--rose-blush) 100%);
-        }
-
-        .section-label {
-            text-align: center;
-            font-size: 0.8rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--rose-soft);
-            font-weight: 700;
-            margin-bottom: 10px;
         }
 
         .section-title {
@@ -302,8 +257,8 @@
             overflow: hidden;
             box-shadow: 0 6px 24px rgba(182,23,58,0.08);
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out, box-shadow 0.3s;
         }
 
         .photo-card.visible {
@@ -313,14 +268,29 @@
 
         .photo-card:hover {
             box-shadow: 0 18px 45px rgba(182,23,58,0.18);
-            transform: translateY(-8px);
+            transform: translateY(-5px);
+        }
+
+        /* حاوية الصورة لمنع الـ Lag وحجز مكانها مسبقاً */
+        .img-container {
+            width: 100%;
+            height: 340px;
+            background: #ffeef2; /* لون مؤقت ناعم يظهر أثناء التحميل */
+            position: relative;
+            overflow: hidden;
         }
 
         .photo-card img {
             width: 100%;
-            height: 340px;
+            height: 100%;
             object-fit: cover;
             display: block;
+            opacity: 0;
+            transition: opacity 0.4s ease-in; /* ظهور تدريجي ناعم أول ما الصورة تجهز */
+        }
+
+        .photo-card img.loaded {
+            opacity: 1;
         }
 
         .card-body {
@@ -351,13 +321,6 @@
             text-align: center;
         }
 
-        .footer-heart {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            display: block;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
         .footer-title {
             font-family: 'Amiri', serif;
             font-size: 1.8rem;
@@ -373,15 +336,6 @@
             margin: 0 auto;
         }
 
-        .footer-line {
-            width: 60px;
-            height: 1px;
-            background: var(--gold);
-            margin: 25px auto;
-            opacity: 0.6;
-        }
-
-        /* ===== RESPONSIVE ===== */
         @media(max-width: 600px) {
             .lock-box { padding: 36px 24px; }
             .hero-title { font-size: 1.8rem; }
@@ -392,7 +346,6 @@
 </head>
 <body>
 
-<!-- ===== LOCK SCREEN ===== -->
 <div id="lockScreen">
     <div class="lock-petals" id="lockPetals"></div>
     <div class="lock-box">
@@ -400,48 +353,38 @@
         <h2>الموقع ده مخصص لشخص واحد بس</h2>
         <p>اكتبي كلمة السر الخاصة بنا.. وافتحي قلبي</p>
         <div class="input-wrap">
-            <!-- تم تغيير الـ placeholder لـ text عادي عشان تبان الحروف وهي بتكتبها -->
-            <input type="text" id="passwordInput" placeholder="اكتبي الباسورد هنا..." autocomplete="off" style="letter-spacing: 0px;">
+            <input type="text" id="passwordInput" placeholder="اكتبي الباسورد هنا..." autocomplete="off">
         </div>
         <button class="unlock-btn" onclick="checkPassword()">افتح قلبي ❤️</button>
         <p id="errorMessage">الباسورد غلط.. ركزي وافتكري الكلمة السرية 😉</p>
     </div>
 </div>
 
-<!-- ===== MAIN CONTENT ===== -->
 <main id="mainContent" style="display:none;">
 
-    <!-- HERO -->
     <section class="hero">
         <p class="eyebrow">رسالة من القلب</p>
         <h1 class="hero-title">مقدرش على زعلك يا أجمل حاجة في دنيتي ❤️</h1>
-        <div class="hero-divider"></div>
         <p class="hero-body">
             الدنيا بتبقى وحشة أوي والوقت مبيعديش وانتي زعلانة مني.. جمعتلك كل صورنا وذكرياتنا هنا عشان أقولك إنك أغلى حاجة في عمري، ومفيش أي حاجة تستاهل إننا نزعل من بعض.. سامحيني يا قلبي المستحيل يلاقي زيك.
         </p>
         <p class="scroll-hint">↓ &nbsp; اسكرولي شوفي ذكرياتنا &nbsp; ↓</p>
     </section>
 
-    <!-- GALLERY -->
     <section class="gallery-section">
-        <p class="section-label">ذكرياتنا الحلوة</p>
         <h2 class="section-title">كل صورة بتحكي قصة 💕</h2>
         <div class="gallery" id="loveGallery"></div>
     </section>
 
-    <!-- FOOTER -->
     <footer>
-        <span class="footer-heart">💖</span>
         <h3 class="footer-title">مستني ضحكتك تنور دنيتي تاني</h3>
-        <div class="footer-line"></div>
         <p class="footer-sub">بحبك من غير حدود، وزعلك بيوجعني أكتر من أي حاجة تانية في الدنيا دي. أنا آسف يا قلبي.</p>
     </footer>
 
-<!-- YouTube Music Player (hidden) -->
 <div id="yt-player-wrap" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:900;display:none;background:rgba(181,23,58,0.92);backdrop-filter:blur(10px);border-radius:50px;padding:10px 20px;align-items:center;gap:12px;box-shadow:0 8px 25px rgba(0,0,0,0.2);">
     <div id="youtube-player" style="display:none;"></div>
-    <button onclick="toggleMusic()" id="musicBtn" style="background:none;border:none;color:white;font-size:1.4rem;cursor:pointer;line-height:1;">▶️</button>
-    <span style="color:white;font-family:'Tajawal',sans-serif;font-size:0.9rem;font-weight:700;">مكانك في قلبي · عمرو دياب</span>
+    <button onclick="toggleMusic()" id="musicBtn" style="background:none;border:none;color:white;font-size:1.4rem;cursor:pointer;">▶️</button>
+    <span style="color:white;font-family:'Tajawal',sans-serif;font-size:0.9rem;font-weight:700;">مكانك in قلبي · عمرو دياب</span>
     <input type="range" id="volumeSlider" min="0" max="100" value="70" oninput="setVolume(this.value)" style="width:80px;accent-color:#ffd6e0;cursor:pointer;">
 </div>
 
@@ -459,37 +402,30 @@
         p.style.fontSize = (Math.random() * 12 + 14) + 'px';
         p.style.animationDuration = (Math.random() * 5 + 5) + 's';
         p.style.animationDelay = (Math.random() * 6) + 's';
-        p.style.animationIterationCount = 'infinite';
         lockPetals.appendChild(p);
     }
 
     // ===== PASSWORD CHECK =====
-    // تم تغيير الكلمة السرية هنا رسمياً
     const CORRECT_PASSWORD = "ahmedxxsafia";
 
     function checkPassword() {
-        let input = document.getElementById('passwordInput').value.trim().toLowerCase(); // تحويل الحروف لـ Small تلقائياً لمنع أي خطأ تعارض كابيتال وسمول
+        let input = document.getElementById('passwordInput').value.trim().toLowerCase();
         const errorMsg = document.getElementById('errorMessage');
         const lockScreen = document.getElementById('lockScreen');
         const mainContent = document.getElementById('mainContent');
 
         if (input === CORRECT_PASSWORD) {
             lockScreen.style.opacity = '0';
-            lockScreen.style.transform = 'scale(1.05)';
+            lockScreen.style.transform = 'scale(1.02)';
             setTimeout(() => {
                 lockScreen.style.display = 'none';
                 mainContent.style.display = 'block';
                 startHeartsRain();
                 setTimeout(startMusic, 300); 
                 initGallery();
-                initScrollObserver();
-            }, 900);
+            }, 800);
         } else {
             errorMsg.style.display = 'block';
-            errorMsg.style.animation = 'none';
-            requestAnimationFrame(() => {
-                errorMsg.style.animation = 'shake 0.4s ease';
-            });
             document.getElementById('passwordInput').value = '';
         }
     }
@@ -507,129 +443,4 @@
             h.style.left = Math.random() * 100 + 'vw';
             h.style.fontSize = (Math.random() * 14 + 14) + 'px';
             h.style.opacity = Math.random() * 0.5 + 0.4;
-            h.style.animationDuration = (Math.random() * 4 + 3) + 's';
-            document.body.appendChild(h);
-            setTimeout(() => h.remove(), 7000);
-        }, 400);
-    }
-
-    // ===== GALLERY =====
-    const loveMessages = [
-        "مقدرش على زعلك.. ضحكتك بالدنيا كلها 💖",
-        "كل لحظة هنا بتفكرني بقد إيه أنا محظوظ بكي ✨",
-        "انتي الأمان اللي مش عاوز أخسره أبداً 🥰",
-        "زعلك على عيني، ومستحيل أهون عليا تسيبيني زعلان",
-        "يا رب يديمك في حياتي وينهي أي زعل بيننا 🔐",
-        "مكانك في قلبي ثابت ومبيغيروش أي موقف",
-        "سامحيني.. مفيش حد بيحبك قدي في الدنيا دي كلها",
-        "انتي النجمة اللي بتنور عتمة أيامي ⭐",
-        "كل صورة من دول وراها حكاية حلوة عشتها معاكي",
-        "الدنيا بتظلم in عيني لما بشوفك زعلانة",
-        "جمبك بحس إني ملكت الدنيا، وبزعلك بحس إني خسرت كل حاجة 🌍",
-        "انتي مش بس حبيبتي، انتي كل طاقاتي الحلوة في الحياة 💕",
-        "حقك عليا، وأنا هجيلك وأصالحك كل مرة"
-    ];
-
-    const cardLabels = [
-        "روحي وعمري 🌹", "نور عينيّ ✨", "قلبي وحياتي 💖", "أغلى ما عندي 🥰",
-        "حبيبتي الغالية 💕", "ملكة أيامي 👑", "جنتي في الدنيا 🌸", "أجمل ما في عمري 🌺",
-        "دفا قلبي ☀️", "سرّ ابتسامتي 😊", "أمنيتي الحلوة 🌙", "كل معنى في حياتي 💫",
-        "عمري ومنتهاه ❤️"
-    ];
-
-    function initGallery() {
-        const gallery = document.getElementById('loveGallery');
-        const baseURL = "https://raw.githubusercontent.com/ahmed3bdelhamedd/A-S/main/";
-
-        const indices = Array.from({length: 29}, (_, k) => k + 1);
-        
-        for (let i = indices.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [indices[i], indices[j]] = [indices[j], indices[i]];
-        }
-
-        indices.forEach((i, position) => {
-            const num = String(i).padStart(2, '0');
-            const msg = loveMessages[position % loveMessages.length];
-            const fileName = num + ".jpeg"; 
-            
-            const card = document.createElement('div');
-            card.className = 'photo-card';
-            card.innerHTML = `
-                <img src="${baseURL}${fileName}" alt="ذكرى رقم ${i}" loading="lazy">
-                <div class="card-body">
-                    <p class="card-num">${cardLabels[position % cardLabels.length]}</p>
-                    <p class="card-msg">${msg}</p>
-                </div>
-            `;
-            gallery.appendChild(card);
-        });
-    }
-
-    // ===== YOUTUBE MUSIC =====
-    let ytPlayer = null;
-    let musicPlaying = false;
-
-    function onYouTubeIframeAPIReady() {
-        ytPlayer = new YT.Player('youtube-player', {
-            height: '0',
-            width: '0',
-            videoId: 'X-k9_eTW7bg',
-            playerVars: { 
-                autoplay: 0, 
-                controls: 0, 
-                loop: 1, 
-                playlist: 'X-k9_eTW7bg',
-                enablejsapi: 1,
-                origin: window.location.origin
-            },
-            events: {
-                onReady: function(e) {
-                    e.target.setVolume(75);
-                }
-            }
-        });
-    }
-
-    function startMusic() {
-        const wrap = document.getElementById('yt-player-wrap');
-        wrap.style.display = 'flex';
-        if (ytPlayer && ytPlayer.playVideo) {
-            ytPlayer.playVideo();
-            musicPlaying = true;
-            document.getElementById('musicBtn').textContent = '⏸️';
-        }
-    }
-
-    function toggleMusic() {
-        if (!ytPlayer) return;
-        if (musicPlaying) {
-            ytPlayer.pauseVideo();
-            musicPlaying = false;
-            document.getElementById('musicBtn').textContent = '▶️';
-        } else {
-            ytPlayer.playVideo();
-            musicPlaying = true;
-            document.getElementById('musicBtn').textContent = '⏸️';
-        }
-    }
-
-    function setVolume(val) {
-        if (ytPlayer) ytPlayer.setVolume(parseInt(val));
-    }
-
-    function initScrollObserver() {
-        const cards = document.querySelectorAll('.photo-card');
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach((entry, idx) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => entry.target.classList.add('visible'), idx * 50);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.05 });
-        cards.forEach(c => observer.observe(c));
-    }
-</script>
-</body>
-</html>
+            h.style
