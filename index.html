@@ -173,7 +173,7 @@
 
         .photo-card img {
             width: 100%;
-            aspect-ratio: 1 / 1; /* بيخلي الصورة مربعة بالظبط */
+            aspect-ratio: 1 / 1;
             object-fit: cover;
             border-radius: 10px;
             border: 2px solid #ffb3c6;
@@ -217,6 +217,7 @@
 </head>
 <body>
 
+    <!-- شاشة القفل التفاعلية -->
     <div id="lockScreen">
         <div class="lock-box">
             <h2>الموقع ده مخصص لشخص واحد بس 🔐</h2>
@@ -227,6 +228,7 @@
         </div>
     </div>
 
+    <!-- حاوية مخفية لتشغيل الأغنية من اليوتيوب -->
     <div id="musicContainer" style="display: none;"></div>
 
     <header>
@@ -260,14 +262,13 @@
                     lockScreen.style.display = 'none';
                     setInterval(createHeart, 300);
 
-                    // 🎵 تشغيل أغنية اليوتيوب هنا 🎵
-                    // ⚠️ حط ID الأغنية اللي اختارتها بين القوسين دول مكان الكلمة المكتوبة
-                    const youtubeVideoID = "اكتب_ايدي_الاغنية_هنا"; 
+                    // 🎵 تشغيل أغنية اليوتيوب 🎵
+                    const youtubeVideoID = "hcf-wL5f-sw"; 
                     
-                    if (youtubeVideoID !== "اكتب_ايدي_الاغنية_هنا") {
-                        const musicDiv = document.getElementById('musicContainer');
-                        musicDiv.innerHTML = `<iframe width="10" height="10" src="https://www.youtube.com/embed/${youtubeVideoID}?autoplay=1&loop=1&playlist=${youtubeVideoID}" frameborder="0" allow="autoplay"></iframe>`;
-                    }
+                    const musicDiv = document.getElementById('musicContainer');
+                    // تم إضافة start=33 علشان تبدأ من الثانية 33
+                    musicDiv.innerHTML = `<iframe width="10" height="10" src="https://www.youtube.com/embed/${youtubeVideoID}?autoplay=1&start=33&loop=1&playlist=${youtubeVideoID}" frameborder="0" allow="autoplay"></iframe>`;
+                    
                 }, 800);
             } else {
                 errorMsg.style.display = 'block';
@@ -315,7 +316,7 @@
             "حقك عليا، والمرة دي وكل مرة أنا اللي هجيلك وأصالحك 💕"
         ];
 
-        // 4. توليد الـ 29 صورة بشكل عشوائي مع التصميم الجديد (المربعات والقلب النابض)
+        // 4. توليد الـ 29 صورة بشكل عشوائي مع التصميم الجديد
         const galleryContainer = document.getElementById('loveGallery');
         const totalPhotos = 29;
 
@@ -339,7 +340,6 @@
             const card = document.createElement('div');
             card.classList.add('photo-card');
 
-            // إضافة القلب النابض قبل الكلام
             card.innerHTML = `
                 <img src="${photoNumber}.jpeg" alt="ذكرى رقم ${photoNumber}">
                 <div class="card-heart">❤️</div>
