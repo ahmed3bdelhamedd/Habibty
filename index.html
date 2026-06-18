@@ -1,995 +1,113 @@
-<!DOCTYPE html>
-
-<html lang="ar" dir="rtl">
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>إلى أغلى ما في حياتي.. أنا آسف ❤️</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
-    <style>
-
-        :root {
-
-            --rose-deep: #b5173a;
-
-            --rose-mid: #e63262;
-
-            --rose-soft: #ff7096;
-
-            --rose-pale: #ffd6e0;
-
-            --rose-blush: #fff0f3;
-
-            --gold: #d4a847;
-
-            --cream: #fffaf4;
-
-            --dark-text: #3b0a18;
-
-            --mid-text: #7a2232;
-
-        }
-
-
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-
-
-        body {
-
-            background: var(--cream);
-
-            font-family: 'Tajawal', sans-serif;
-
-            color: var(--dark-text);
-
-            overflow-x: hidden;
-
-        }
-
-
-
-        /* ===== LOCK SCREEN ===== */
-
-        #lockScreen {
-
-            position: fixed;
-
-            inset: 0;
-
-            z-index: 10000;
-
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
-            background: radial-gradient(ellipse at 60% 40%, #ffd6e0 0%, #ffb3c6 40%, #e63262 100%);
-
-        }
-
-
-
-        .lock-petals {
-
-            position: absolute;
-
-            inset: 0;
-
-            overflow: hidden;
-
-            pointer-events: none;
-
-        }
-
-
-
-        .petal {
-
-            position: absolute;
-
-            font-size: 1.4rem;
-
-            animation: petalFall linear infinite;
-
-            opacity: 0.5;
-
-        }
-
-
-
-        @keyframes petalFall {
-
-            0%  { transform: translateY(-5vh) rotate(0deg); opacity: 0.6; }
-
-            100%{ transform: translateY(110vh) rotate(400deg); opacity: 0; }
-
-        }
-
-
-
-        .lock-box {
-
-            position: relative;
-
-            background: rgba(255,255,255,0.92);
-
-            backdrop-filter: blur(10px);
-
-            padding: 50px 40px;
-
-            border-radius: 30px;
-
-            box-shadow: 0 25px 60px rgba(182, 23, 58, 0.25), 0 0 0 1px rgba(255,255,255,0.6) inset;
-
-            text-align: center;
-
-            max-width: 420px;
-
-            width: 92%;
-
-        }
-
-
-
-        .lock-icon {
-
-            font-size: 3.5rem;
-
-            margin-bottom: 18px;
-
-            display: block;
-
-        }
-
-
-
-        .lock-box h2 {
-
-            font-family: 'Amiri', serif;
-
-            font-size: 1.7rem;
-
-            color: var(--rose-deep);
-
-            margin-bottom: 10px;
-
-            line-height: 1.5;
-
-        }
-
-
-
-        .lock-box p {
-
-            color: var(--mid-text);
-
-            font-size: 1.05rem;
-
-            margin-bottom: 28px;
-
-            line-height: 1.7;
-
-        }
-
-
-
-        .input-wrap {
-
-            position: relative;
-
-            margin-bottom: 18px;
-
-        }
-
-
-
-        .lock-box input {
-
-            width: 100%;
-
-            padding: 14px 22px;
-
-            border: 2px solid var(--rose-pale);
-
-            border-radius: 50px;
-
-            font-size: 1.15rem;
-
-            font-family: 'Tajawal', sans-serif;
-
-            text-align: center;
-
-            outline: none;
-
-            background: var(--rose-blush);
-
-            color: var(--dark-text);
-
-            transition: border-color 0.3s, box-shadow 0.3s;
-
-        }
-
-
-
-        .lock-box input:focus {
-
-            border-color: var(--rose-mid);
-
-            box-shadow: 0 0 0 4px rgba(230,50,98,0.12);
-
-        }
-
-
-
-        .unlock-btn {
-
-            width: 100%;
-
-            background: linear-gradient(135deg, var(--rose-mid), var(--rose-deep));
-
-            color: white;
-
-            border: none;
-
-            padding: 14px 35px;
-
-            font-size: 1.15rem;
-
-            font-family: 'Tajawal', sans-serif;
-
-            font-weight: 700;
-
-            border-radius: 50px;
-
-            cursor: pointer;
-
-            box-shadow: 0 8px 20px rgba(182,23,58,0.3);
-
-        }
-
-
-
-        #errorMessage {
-
-            color: var(--rose-deep);
-
-            margin-top: 14px;
-
-            font-size: 0.95rem;
-
-            font-weight: 700;
-
-            display: none;
-
-        }
-
-
-
-        /* ===== HEARTS RAIN ===== */
-
-        .heart {
-
-            position: fixed;
-
-            top: -8vh;
-
-            pointer-events: none;
-
-            z-index: 500;
-
-            animation: heartFall linear forwards;
-
-        }
-
-
-
-        @keyframes heartFall {
-
-            to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-
-        }
-
-
-
-        /* ===== HERO ===== */
-
-        .hero {
-
-            min-height: 100vh;
-
-            display: flex;
-
-            flex-direction: column;
-
-            justify-content: center;
-
-            align-items: center;
-
-            padding: 80px 24px 40px;
-
-            background: var(--cream);
-
-            position: relative;
-
-            overflow: hidden;
-
-        }
-
-
-
-        .hero::before {
-
-            content: '';
-
-            position: absolute;
-
-            top: 0; left: 0; right: 0;
-
-            height: 4px;
-
-            background: linear-gradient(90deg, var(--rose-pale), var(--rose-mid), var(--gold), var(--rose-mid), var(--rose-pale));
-
-        }
-
-
-
-        .eyebrow {
-
-            font-size: 0.9rem;
-
-            letter-spacing: 4px;
-
-            color: var(--rose-soft);
-
-            font-weight: 700;
-
-            margin-bottom: 22px;
-
-        }
-
-
-
-        .hero-title {
-
-            font-family: 'Amiri', serif;
-
-            font-size: clamp(2rem, 5vw, 3.4rem);
-
-            color: var(--rose-deep);
-
-            line-height: 1.4;
-
-            max-width: 800px;
-
-            margin-bottom: 30px;
-
-            text-align: center;
-
-        }
-
-
-
-        .hero-body {
-
-            font-size: 1.2rem;
-
-            line-height: 2;
-
-            max-width: 680px;
-
-            color: var(--mid-text);
-
-            text-align: center;
-
-            margin-bottom: 40px;
-
-        }
-
-
-
-        /* ===== COUNTDOWN TIMER ===== */
-
-        .timer-section {
-
-            background: white;
-
-            padding: 24px 35px;
-
-            border-radius: 25px;
-
-            box-shadow: 0 10px 35px rgba(182,23,58,0.06);
-
-            border: 1px solid var(--rose-pale);
-
-            text-align: center;
-
-            max-width: 550px;
-
-            width: 100%;
-
-            margin-bottom: 30px;
-
-        }
-
-
-
-        .timer-title {
-
-            font-size: 1.05rem;
-
-            color: var(--rose-deep);
-
-            font-weight: 700;
-
-            margin-bottom: 15px;
-
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
-            gap: 8px;
-
-        }
-
-
-
-        .timer-grid {
-
-            display: grid;
-
-            grid-template-columns: repeat(4, 1fr);
-
-            gap: 12px;
-
-        }
-
-
-
-        .timer-block {
-
-            background: var(--rose-blush);
-
-            padding: 12px 8px;
-
-            border-radius: 15px;
-
-            border: 1px solid rgba(230,50,98,0.1);
-
-        }
-
-
-
-        .timer-num {
-
-            font-size: 1.6rem;
-
-            font-weight: 900;
-
-            color: var(--rose-mid);
-
-            display: block;
-
-            line-height: 1.2;
-
-        }
-
-
-
-        .timer-label {
-
-            font-size: 0.8rem;
-
-            color: var(--mid-text);
-
-            font-weight: 400;
-
-        }
-
-
-
-        .scroll-hint {
-
-            margin-top: 25px;
-
-            font-size: 0.85rem;
-
-            color: var(--rose-soft);
-
-            letter-spacing: 2px;
-
-            animation: bobbing 2s ease-in-out infinite;
-
-        }
-
-
-
-        @keyframes bobbing {
-
-            0%,100%{ transform: translateY(0); }
-
-            50%    { transform: translateY(6px); }
-
-        }
-
-
-
-        /* ===== GALLERY ===== */
-
-        .gallery-section {
-
-            padding: 60px 20px 80px;
-
-            background: linear-gradient(180deg, var(--cream) 0%, var(--rose-blush) 100%);
-
-        }
-
-
-
-        .section-title {
-
-            font-family: 'Amiri', serif;
-
-            text-align: center;
-
-            font-size: 2rem;
-
-            color: var(--rose-deep);
-
-            margin-bottom: 50px;
-
-        }
-
-
-
-        .gallery {
-
-            display: grid;
-
-            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-
-            gap: 28px;
-
-            max-width: 1280px;
-
-            margin: 0 auto;
-
-        }
-
-
-
-        .photo-card {
-
-            background: white;
-
-            border-radius: 22px;
-
-            overflow: hidden;
-
-            box-shadow: 0 6px 24px rgba(182,23,58,0.08);
-
-            opacity: 0;
-
-            transform: translateY(20px);
-
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out, box-shadow 0.3s;
-
-        }
-
-
-
-        .photo-card.visible {
-
-            opacity: 1;
-
-            transform: translateY(0);
-
-        }
-
-
-
-        .photo-card:hover {
-
-            box-shadow: 0 18px 45px rgba(182,23,58,0.18);
-
-            transform: translateY(-5px);
-
-        }
-
-
-
-        .img-container {
-
-            width: 100%;
-
-            height: 340px;
-
-            background: #ffeef2;
-
-            position: relative;
-
-            overflow: hidden;
-
-        }
-
-
-
-        .photo-card img {
-
-            width: 100%;
-
-            height: 100%;
-
-            object-fit: cover;
-
-            display: block;
-
-            opacity: 0;
-
-            transition: opacity 0.3s ease-in;
-
-        }
-
-
-
-        .photo-card img.loaded {
-
-            opacity: 1;
-
-        }
-
-
-
-        .card-body {
-
-            padding: 18px 20px;
-
-            border-top: 2px solid var(--rose-pale);
-
-        }
-
-
-
-        .card-num {
-
-            font-size: 0.75rem;
-
-            letter-spacing: 3px;
-
-            color: var(--rose-soft);
-
-            font-weight: 700;
-
-            margin-bottom: 8px;
-
-        }
-
-
-
-        .card-msg {
-
-            font-size: 1.05rem;
-
-            font-weight: 700;
-
-            color: var(--mid-text);
-
-            line-height: 1.6;
-
-        }
-
-
-
-        /* ===== FOOTER ===== */
-
-        footer {
-
-            background: var(--rose-deep);
-
-            color: var(--rose-pale);
-
-            padding: 70px 24px;
-
-            text-align: center;
-
-        }
-
-
-
-        .footer-title {
-
-            font-family: 'Amiri', serif;
-
-            font-size: 1.8rem;
-
-            color: white;
-
-            margin-bottom: 16px;
-
-        }
-
-
-
-        .footer-sub {
-
-            font-size: 1.05rem;
-
-            opacity: 0.75;
-
-            line-height: 1.9;
-
-            max-width: 500px;
-
-            margin: 0 auto;
-
-        }
-
-
-
-        /* ===== MUSIC PLAYER BAR ===== */
-
-        #music-control-bar {
-
-            position: fixed;
-
-            bottom: 20px;
-
-            left: 50%;
-
-            transform: translateX(-50%);
-
-            z-index: 2000;
-
-            background: rgba(181, 23, 58, 0.95);
-
-            backdrop-filter: blur(10px);
-
-            padding: 12px 25px;
-
-            border-radius: 50px;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 15px;
-
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-
-            border: 1px solid rgba(255,255,255,0.2);
-
-            width: max-content;
-
-            max-width: 90%;
-
-        }
-
-
-
-        .play-music-btn {
-
-            background: white;
-
-            color: var(--rose-deep);
-
-            border: none;
-
-            width: 40px;
-
-            height: 40px;
-
-            border-radius: 50%;
-
-            font-size: 1.2rem;
-
-            cursor: pointer;
-
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-
-            transition: transform scale(0.2s);
-
-        }
-
-
-
-        .play-music-btn:active {
-
-            transform: scale(0.9);
-
-        }
-
-
-
-        .music-text {
-
-            color: white;
-
-            font-size: 0.95rem;
-
-            font-weight: 700;
-
-            white-space: nowrap;
-
-        }
-
-
-
-        @media(max-width: 600px) {
-
-            .lock-box { padding: 36px 24px; }
-
-            .hero-title { font-size: 1.8rem; }
-
-            .gallery { grid-template-columns: 1fr; }
-
-            .timer-grid { gap: 8px; }
-
-            .timer-num { font-size: 1.25rem; }
-
-        }
-
-    </style>
-
-    <script src="https://www.youtube.com/iframe_api"></script>
-
-</head>
-
-<body>
-
-
-
-<div id="lockScreen">
-
-    <div class="lock-petals" id="lockPetals"></div>
-
-    <div class="lock-box">
-
-        <span class="lock-icon">🔐</span>
-
-        <h2>الموقع ده مخصص لشخص واحد بس</h2>
-
-        <p>اكتبي كلمة السر الخاصة بنا.. وافتحي قلبي</p>
-
-        <div class="input-wrap">
-
-            <input type="text" id="passwordInput" placeholder="اكتبي الباسورد هنا..." autocomplete="off" autocorrect="off" autocapitalize="off">
-
-        </div>
-
-        <button class="unlock-btn" id="submitBtn">افتح قلبي ❤️</button>
-
-        <p id="errorMessage">الباسورد غلط.. ركزي وافتكري الكلمة السرية 😉</p>
-
-    </div>
-
-</div>
-
-
-
-<main id="mainContent" style="display:none;">
-
-
-
-    <section class="hero">
-
-        <p class="eyebrow">رسالة من القلب</p>
-
-        <h1 class="hero-title">مقدرش على زعلك يا أجمل حاجة في دنيتي ❤️</h1>
-
-        <p class="hero-body">
-
-            الدنيا بتبقى وحشة أوي والوقت مبيعديش وانتي زعلانة مني.. جمعتلك كل صورنا وذكرياتنا هنا عشان أقولك إنك أغلى حاجة في عمري، ومفيش أي حاجة تستاهل إننا نزعل من بعض.. سامحيني يا قلبي المستحيل يلاقي زيك.
-
-        </p>
-
-
-
-        <div class="timer-section">
-
-            <div class="timer-title">⏳ الوقت اللي عدا على أجمل يوم في حياتنا (١٠-٨-٢٠٢٥) ❤️</div>
-
-            <div class="timer-grid">
-
-                <div class="timer-block">
-
-                    <span class="timer-num" id="timer-days">00</span>
-
-                    <span class="timer-label">يوم</span>
-
+import { useEffect, useState } from "react";
+import { motion } from "motion/react";
+import { Heart, Camera } from "lucide-react";
+import { MemoryCard } from "../types";
+
+export default function MemoryGallery() {
+  const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
+
+  const memories: MemoryCard[] = [
+    {
+      id: "1",
+      numberLabel: "الذكرى الأولى 💕",
+      imageUrl: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600",
+      caption: "لما عيوننا اتقابلت لأول مرة وعرفت وقتها إن حياتي كلها بدأت تتغير وتتملي بالورد والأمل ❤️",
+    },
+    {
+      id: "2",
+      numberLabel: "تفاصيلنا الحلوة 📸",
+      imageUrl: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=600",
+      caption: "كل خروجة وكل لقطة وكل ضحكة صوّرناها، محفورة في قلبي وروحي ومش ممكن تروح أبداً.",
+    },
+    {
+      id: "3",
+      numberLabel: "كلامنا من القلب ☕",
+      imageUrl: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=600",
+      caption: "القهوة سوا وكلامنا اللي بيطول بالساعات ومبنشبعش منه أبداً.. وجودك بيملا الدنيا طمأنينة ودفا.",
+    },
+    {
+      id: "4",
+      numberLabel: "تمشية النجوم 🌟",
+      imageUrl: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?q=80&w=600",
+      caption: "المكان الهادي والكلام اللي من القلب اللي بيخليني أحس بالأمان التام.. انتي بيتي وعيلتي وكل ناسي.",
+    },
+    {
+      id: "5",
+      numberLabel: "ضحكاتنا سوا 🌅",
+      imageUrl: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600",
+      caption: "كل الغروب وكل مكان روحناه سوا بيشهد على حبنا وضحكتنا.. ولسه هنملا الدنيا بالذكريات اللي ملهاش حدود.",
+    },
+    {
+      id: "6",
+      numberLabel: "وردة عمري 🌹",
+      imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600",
+      caption: "انتي الوردة الوحيدة في بستان عمري اللي ماليش غيرها، ومقدرش أشوف فيها أي ذرة حزن أو زعل.",
+    },
+  ];
+
+  const handleImageLoad = (id: string) => {
+    setLoadedImages((prev) => ({ ...prev, [id]: true }));
+  };
+
+  return (
+    <div className="w-full">
+      <div className="font-serif text-3xl font-extrabold text-center text-rose-deep mb-4 flex items-center justify-center gap-2">
+        <Camera className="w-7 h-7 text-rose-mid" />
+        <h2>كل صورة بتحكي قصة جمِيلة 💕</h2>
+      </div>
+      <p className="text-center text-mid-text text-base max-w-lg mx-auto mb-10 leading-relaxed font-medium">
+        صوّرنا وذكرياتنا هي الشاهد الأساسي على الأيام الحلوة اللي عشناها سوا.. والزعل ما هو إلا لحظة عابرة وهتعدي بضحكتك البهية.
+      </p>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {memories.map((memory, index) => (
+          <motion.div
+            key={memory.id}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ delay: index * 0.1, duration: 0.6 }}
+            whileHover={{ y: -8, scale: 1.02, rotate: index % 2 === 0 ? 1 : -1 }}
+            className="bg-white p-4 pb-6 rounded-2xl shadow-[0_10px_30px_rgba(182,23,58,0.06)] border border-rose-pale hover:border-rose-soft/50 transition-all duration-300 relative group flex flex-col justify-between"
+          >
+            {/* Soft decorative tape on top of Polaroid card */}
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-rose-pale/35 backdrop-blur-xs skew-x-6 rotate-2 border-x border-dashed border-rose-soft/20 z-20 pointer-events-none" />
+
+            <div className="w-full h-72 sm:h-80 bg-rose-blush/40 rounded-xl overflow-hidden relative border border-rose-pale/50 flex-none mb-4">
+              {/* Fallback romantic placeholder or shimmer loader */}
+              {!loadedImages[memory.id] && (
+                <div className="absolute inset-0 bg-gradient-to-tr from-rose-pale/30 to-rose-blush animate-pulse flex items-center justify-center">
+                  <Heart className="w-8 h-8 text-rose-soft/40 animate-ping" />
                 </div>
+              )}
 
-                <div class="timer-block">
+              <img
+                src={memory.imageUrl}
+                alt={memory.numberLabel}
+                onLoad={() => handleImageLoad(memory.id)}
+                referrerPolicy="no-referrer"
+                className={`w-full h-full object-cover transition-opacity duration-700 ${
+                  loadedImages[memory.id] ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                } group-hover:scale-105 duration-700`}
+              />
 
-                    <span class="timer-num" id="timer-hours">00</span>
-
-                    <span class="timer-label">ساعة</span>
-
-                </div>
-
-                <div class="timer-block">
-
-                    <span class="timer-num" id="timer-minutes">00</span>
-
-                    <span class="timer-label">دقيقة</span>
-
-                </div>
-
-                <div class="timer-block">
-
-                    <span class="timer-num" id="timer-seconds">00</span>
-
-                    <span class="timer-label">ثانية</span>
-
-                </div>
-
+              {/* Gentle Overlay Heart */}
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 via-transparent to-transparent h-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
+                <Heart className="w-7 h-7 text-rose-pale fill-rose-mid drop-shadow-md animate-bounce" />
+              </div>
             </div>
 
-        </div>
-
-
-
-        <p class="scroll-hint">↓ &nbsp; اسكرولي شوفي ذكرياتنا &nbsp; ↓</p>
-
-    </section>
-
-
-
-    <section class="gallery-section">
-
-        <h2 class="section-title">كل صورة بتحكي قصة 💕</h2>
-
-        <div class="gallery" id="loveGallery"></div>
-
-    </section>
-
-
-
-    <footer>
-
-        <h3 class="footer-title">مستني ضحكتك تنور دنيتي تاني</h3>
-
-        <p class="footer-sub">بحبك من غير حدود، وزعلك بيوجعني أكتر من أي حاجة تانية في الدنيا دي. أنا آسف يا قلبي.</p>
-
-    </footer>
-
-
-
-    <div id="music-control-bar" style="display:none;">
-
-        <div id="youtube-player" style="display:none;"></div>
-
-        <button class="play-music-btn" id="musicBtn">▶️</button>
-
-        <span class="music-text">مكانك في قلبي · عمرو دياب 🎵</span>
-
+            <div className="content-area">
+              <span className="text-xs sm:text-sm font-bold text-rose-soft tracking-wider block mb-1.5 font-sans">
+                {memory.numberLabel}
+              </span>
+              <p className="text-dark-text text-base leading-relaxed font-semibold font-serif">
+                {memory.caption}
+              </p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
     </div>
-
-
-
-</main>
-
-
-
-<script src="script.js"></script>
-
-</body>
-
-</html> 
+  );
+}
