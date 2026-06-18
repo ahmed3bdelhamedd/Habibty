@@ -1,4 +1,6 @@
-@@ -3,721 +3,57 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
 
 <head>
 
@@ -11,8 +13,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
-    <title>أنا آسف.. ❤️</title>
 
     <style>
 
@@ -59,12 +59,6 @@
 
 
         /* ===== LOCK SCREEN ===== */
-
-        body { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; background: #fffaf4; }
-
-        
-
-        /* شاشة القفل */
 
         #lockScreen {
 
@@ -810,7 +804,7 @@
 
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 
-            transition: transform 0.2s;
+            transition: transform scale(0.2s);
 
         }
 
@@ -850,31 +844,7 @@
 
             .timer-num { font-size: 1.25rem; }
 
-            position: fixed; inset: 0; z-index: 9999;
-
-            background: #e63262;
-
-            display: flex; flex-direction: column;
-
-            justify-content: center; align-items: center;
-
-            color: white; text-align: center;
-
         }
-
-        
-
-        /* إخفاء المحتوى الرئيسي تماماً في البداية */
-
-        #mainContent { display: none; padding: 20px; }
-
-        
-
-        input { padding: 15px; border-radius: 20px; border: none; margin: 10px; width: 80%; max-width: 300px; text-align: center; font-size: 18px; }
-
-        button { padding: 15px 30px; border-radius: 20px; border: none; cursor: pointer; background: #ffd6e0; font-weight: bold; font-size: 16px; transition: 0.3s; }
-
-        button:hover { background: #ff7096; }
 
     </style>
 
@@ -904,19 +874,9 @@
 
         </div>
 
-        <button class="unlock-btn" onclick="checkLovePassword()">افتح قلبي ❤️</button>
+        <button class="unlock-btn" id="submitBtn">افتح قلبي ❤️</button>
 
         <p id="errorMessage">الباسورد غلط.. ركزي وافتكري الكلمة السرية 😉</p>
-
-    <div id="lockScreen">
-
-        <h1>يا أغلى الناس.. سامحيني</h1>
-
-        <input type="text" id="passwordInput" placeholder="كلمة السر">
-
-        <button onclick="checkPassword()">افتحي قلبي</button>
-
-        <p id="error" style="display:none; color: yellow; margin-top: 10px;">الباسورد غلط، ركز يا أحمد!</p>
 
     </div>
 
@@ -936,7 +896,7 @@
 
         <p class="hero-body">
 
-            الدنيا بتبقى وحشة أوي والوقت مبيعديش وانتي زعلانة مني.. جمعتلك كل صورنا وذكرياتنا هنا عشان أقولك إنك أغلى حاجة في عمري, ومفيش أي حاجة تستاهل إننا نزعل من بعض.. سامحيني يا قلبي المستحيل يلاقي زيك.
+            الدنيا بتبقى وحشة أوي والوقت مبيعديش وانتي زعلانة مني.. جمعتلك كل صورنا وذكرياتنا هنا عشان أقولك إنك أغلى حاجة في عمري، ومفيش أي حاجة تستاهل إننا نزعل من بعض.. سامحيني يا قلبي المستحيل يلاقي زيك.
 
         </p>
 
@@ -1016,17 +976,9 @@
 
         <div id="youtube-player" style="display:none;"></div>
 
-        <button class="play-music-btn" onclick="toggleMusic()" id="musicBtn">▶️</button>
+        <button class="play-music-btn" id="musicBtn">▶️</button>
 
         <span class="music-text">مكانك في قلبي · عمرو دياب 🎵</span>
-
-    <div id="mainContent">
-
-        <h1>أنا آسف يا قلبي.. ❤️</h1>
-
-        <p>مقدرش على زعلك، الدنيا بتبقى وحشة أوي وانتي مش راضية عني.</p>
-
-        <p>بحبك يا صفيّة.</p>
 
     </div>
 
@@ -1036,491 +988,8 @@
 
 
 
-<script>
-
-    // ===== LOCK SCREEN PETALS =====
-
-    const lockPetals = document.getElementById('lockPetals');
-
-    const petalEmojis = ['🌸','🌺','💮','🌷','❤️','💕'];
-
-    for (let i = 0; i < 18; i++) {
-
-        const p = document.createElement('div');
-
-        p.className = 'petal';
-
-        p.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
-
-        p.style.left = Math.random() * 100 + 'vw';
-
-        p.style.fontSize = (Math.random() * 12 + 14) + 'px';
-
-        p.style.animationDuration = (Math.random() * 5 + 5) + 's';
-
-        p.style.animationDelay = (Math.random() * 6) + 's';
-
-        lockPetals.appendChild(p);
-
-    }
-
-
-
-    // ===== PASSWORD CHECK (تم تصليح الغلطة المزدوجة بنجاح) =====
-
-    function checkLovePassword() {
-
-        var inputElement = document.getElementById('passwordInput');
-
-        var inputVal = inputElement.value.replace(/\s+/g, '').toLowerCase();
-
-        var errorMsg = document.getElementById('errorMessage');
-
-        var lockScreen = document.getElementById('lockScreen');
-
-        var mainContent = document.getElementById('mainContent');
-
-
-
-        if (inputVal === "ahmedxxsafia") {
-
-            lockScreen.style.display = 'none'; // مصلحة هنا تماماً ✅
-
-            mainContent.style.display = 'block';
-
-            
-
-            startHeartsRain();
-
-            initGallery();
-
-            startCountdown();
-
-            
-
-            document.getElementById('music-control-bar').style.display = 'flex';
-
-            setTimeout(startMusic, 400);
-
-        } else {
-
-            errorMsg.style.display = 'block';
-
-            inputElement.value = '';
-
-        }
-
-    }
-
-
-
-    document.getElementById('passwordInput').addEventListener('keypress', function(e) {
-
-        if (e.key === 'Enter') {
-
-            checkLovePassword();
-
-        }
-
-    });
-
-
-
-    // ===== COUNTDOWN TIMER =====
-
-    function startCountdown() {
-
-        const startDate = new Date("August 10, 2025 00:00:00").getTime();
-
-
-
-        setInterval(() => {
-
-            const now = new Date().getTime();
-
-            const difference = now - startDate;
-
-
-
-            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-
-            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-
-
-            document.getElementById("timer-days").textContent = String(days).padStart(2, '0');
-
-            document.getElementById("timer-hours").textContent = String(hours).padStart(2, '0');
-
-            document.getElementById("timer-minutes").textContent = String(minutes).padStart(2, '0');
-
-            document.getElementById("timer-seconds").textContent = String(seconds).padStart(2, '0');
-
-        }, 1000);
-
-    }
-
-
-
-    // ===== HEARTS RAIN =====
-
-    function startHeartsRain() {
-
-        setInterval(() => {
-
-            const h = document.createElement('div');
-
-            h.className = 'heart';
-
-            h.textContent = ['❤️','💕','💖','💗','🌹'][Math.floor(Math.random()*5)];
-
-            h.style.left = Math.random() * 100 + 'vw';
-
-            h.style.fontSize = (Math.random() * 14 + 14) + 'px';
-
-            h.style.opacity = Math.random() * 0.5 + 0.4;
-
-            h.style.animationDuration = (Math.random() * 4 + 3) + 's';
-
-            document.body.appendChild(h);
-
-            setTimeout(() => h.remove(), 6000);
-
-        }, 400);
-
-    }
-
-
-
-    // ===== GALLERY =====
-
-    const loveMessages = [
-
-        "مقدرش على زعلك.. ضحكتك بالدنيا كلها 💖",
-
-        "كل لحظة هنا بتفكرني بقد إيه أنا محظوظ بكي ✨",
-
-        "انتي الأمان اللي مش عاوز أخسره أبداً 🥰",
-
-        "زعلك على عيني، ومستحيل أهون عليا تسيبيني زعلان",
-
-        "يا رب يديمك في حياتي وينهي أي زعل بيننا 🔐",
-
-        "مكانك في قلبي ثابت ومبيغيروش أي موقف",
-
-        "سامحيني.. مفيش حد بيحبك قدي في الدنيا دي كلها",
-
-        "انتي النجمة اللي بتنور عتمة أيامي ⭐",
-
-        "كل صورة من دول وراها حكاية حلوة عشتها معاكي",
-
-        "الدنيا بتظلم في عيني لما بشوفك زعلانة",
-
-        "جمبك بحس إني ملكت الدنيا، وبزعلك بحس إني خسرت كل حاجة 🌍"
-
-    ];
-
-
-
-    const cardLabels = [
-
-        "روحي وعمري 🌹", "نور عينيّ ✨", "قلبي وحياتي 💖", "أغلى ما عندي 🥰",
-
-        "حبيبتي الغالية 💕", "ملكة أيامي 👑"
-
-    ];
-
-
-
-    const baseURL = "https://raw.githubusercontent.com/ahmed3bdelhamedd/A-S/main/";
-
-
-
-    function initGallery() {
-
-        const gallery = document.getElementById('loveGallery');
-
-        const indices = Array.from({length: 29}, (_, k) => k + 1);
-
-        
-
-        for (let i = indices.length - 1; i > 0; i--) {
-
-            const j = Math.floor(Math.random() * (i + 1));
-
-            [indices[i], indices[j]] = [indices[j], indices[i]];
-
-        }
-
-
-
-        indices.forEach((i, position) => {
-
-            const msg = loveMessages[position % loveMessages.length];
-
-            const numPadded = String(i).padStart(3, '0');
-
-            const initialSrc = `${baseURL}${numPadded}.jpeg`;
-
-            
-
-            const card = document.createElement('div');
-
-            card.className = 'photo-card';
-
-            
-
-            card.innerHTML = `
-
-                <div class="img-container">
-
-                    <img data-src="${initialSrc}" 
-
-                         data-index="${i}" 
-
-                         data-attempt="0" 
-
-                         alt="ذكرى حلوة" 
-
-                         class="lazy-img">
-
-                </div>
-
-                <div class="card-body">
-
-                    <p class="card-num">${cardLabels[position % cardLabels.length]}</p>
-
-                    <p class="card-msg">${msg}</p>
-
-                </div>
-
-            `;
-
-            gallery.appendChild(card);
-
-        });
-
-
-
-        initLazyLoadingAndObserver();
-
-    }
-
-
-
-    function tryNextImageFormat(img) {
-
-        const index = img.getAttribute('data-index');
-
-        let attempt = parseInt(img.getAttribute('data-attempt') || "0") + 1;
-
-        img.setAttribute('data-attempt', attempt);
-
-
-
-        const numThreeDigits = String(index).padStart(3, '0');
-
-        const numTwoDigits = String(index).padStart(2, '0');
-
-
-
-        const formats = [
-
-            `${numThreeDigits}.jpeg`, `${numThreeDigits}.jpg`,
-
-            `${numThreeDigits}.png`, `${numThreeDigits}.webp`,
-
-            `${numThreeDigits}.JPG`, `${numThreeDigits}.JPEG`,
-
-            `${numTwoDigits}.jpeg`, `${numTwoDigits}.jpg`
-
-        ];
-
-
-
-        if (attempt < formats.length) {
-
-            img.src = baseURL + formats[attempt];
-
-        } else {
-
-            img.style.display = 'none';
-
-            img.parentElement.style.background = 'linear-gradient(135deg, #ffd6e0, #fff0f3)';
-
-        }
-
-    }
-
-
-
-    function initLazyLoadingAndObserver() {
-
-        const cards = document.querySelectorAll('.photo-card');
-
-        const images = document.querySelectorAll('.lazy-img');
-
-
-
-        const cardObserver = new IntersectionObserver(entries => {
-
-            entries.forEach(entry => {
-
-                if (entry.isIntersecting) {
-
-                    entry.target.classList.add('visible');
-
-                    cardObserver.unobserve(entry.target);
-
-                }
-
-            });
-
-        }, { threshold: 0.01, rootMargin: '0px 0px 300px 0px' });
-
-
-
-        cards.forEach(c => cardObserver.observe(c));
-
-
-
-        const imgObserver = new IntersectionObserver(entries => {
-
-            entries.forEach(entry => {
-
-                if (entry.isIntersecting) {
-
-                    const img = entry.target;
-
-                    img.addEventListener('error', function() {
-
-                        tryNextImageFormat(img);
-
-                    });
-
-                    img.src = img.getAttribute('data-src');
-
-                    img.onload = () => { img.classList.add('loaded'); };
-
-                    imgObserver.unobserve(img);
-
-                }
-
-            });
-
-        }, { rootMargin: '0px 0px 500px 0px' });
-
-
-
-        images.forEach(img => imgObserver.observe(img));
-
-    }
-
-
-
-    // ===== YOUTUBE MUSIC =====
-
-    let ytPlayer = null;
-
-    let musicPlaying = false;
-
-
-
-    function onYouTubeIframeAPIReady() {
-
-        ytPlayer = new YT.Player('youtube-player', {
-
-            height: '0', width: '0', videoId: 'X-k9_eTW7bg',
-
-            playerVars: { autoplay: 0, controls: 0, loop: 1, playlist: 'X-k9_eTW7bg', enablejsapi: 1, origin: window.location.origin },
-
-            events: { onReady: function(e) { e.target.setVolume(85); } }
-
-        });
-
-    }
-
-
-
-    function startMusic() {
-
-        if (ytPlayer && ytPlayer.playVideo) {
-
-            ytPlayer.playVideo();
-
-            musicPlaying = true;
-
-            document.getElementById('musicBtn').textContent = '⏸️';
-
-        }
-
-    }
-
-
-
-    function toggleMusic() {
-
-        if (!ytPlayer) return;
-
-        if (musicPlaying) {
-
-            ytPlayer.pauseVideo();
-
-            musicPlaying = false;
-
-            document.getElementById('musicBtn').textContent = '▶️';
-
-        } else {
-
-            ytPlayer.playVideo();
-
-            musicPlaying = true;
-
-            document.getElementById('musicBtn').textContent = '⏸️';
-
-        }
-
-    }
-
-</script>
-
-    <script>
-
-        function checkPassword() {
-
-            var pass = document.getElementById('passwordInput').value.toLowerCase().trim();
-
-            var lock = document.getElementById('lockScreen');
-
-            var main = document.getElementById('mainContent');
-
-            var err = document.getElementById('error');
-
-
-
-            if (pass === "ahmedxxsafia") {
-
-                lock.style.display = 'none';
-
-                main.style.display = 'block';
-
-            } else {
-
-                err.style.display = 'block';
-
-                document.getElementById('passwordInput').value = '';
-
-            }
-
-        }
-
-    </script>
+<script src="script.js"></script>
 
 </body>
 
 </html> 
-
